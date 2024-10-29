@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Merge with master
+    - name: Merge with 3.3.5
       run: |
         git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH}} tmp
         cd tmp
