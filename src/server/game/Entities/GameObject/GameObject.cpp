@@ -3161,9 +3161,16 @@ void GameObject::Use(Unit* user)
                 if (player->GetVehicle())
                     return;
 
+                if (HasFlag(GO_FLAG_IN_USE))
+                    return;
+
+                if (!MeetsInteractCondition(player))
+                    return;
+
                 player->RemoveAurasByType(SPELL_AURA_MOD_STEALTH);
                 player->RemoveAurasByType(SPELL_AURA_MOD_INVISIBILITY);
-                return;                                     //we don;t need to delete flag ... it is despawned!
+                spellId = GetGOInfo()->flagStand.pickupSpell;
+                spellCaster = nullptr;
             }
             break;
         }
@@ -3491,8 +3498,21 @@ void GameObject::Use(Unit* user)
         SpellCastResult castResult = CastSpell(user, spellId);
         if (castResult == SPELL_FAILED_SUCCESS)
         {
-            if (GetGoType() == GAMEOBJECT_TYPE_NEW_FLAG)
-                HandleCustomTypeCommand(GameObjectType::SetNewFlagState(FlagState::Taken, user->ToPlayer()));
+            switch (GetGoType())
+            {
+                case GAMEOBJECT_TYPE_NEW_FLAG:
+                    HandleCustomTypeCommand(GameObjectType::SetNewFlagState(FlagState::Taken, user->ToPlayer()));
+                    break;
+                case GAMEOBJECT_TYPE_FLAGSTAND:
+                    SetFlag(GO_FLAG_IN_USE);
+                    if (ZoneScript* zonescript = GetZoneScript())
+                        zonescript->OnFlagTaken(this, Object::ToPlayer(user));
+
+                    Delete();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -4003,22 +4023,14 @@ GameObject* GameObject::GetLinkedTrap()
     return ObjectAccessor::GetGameObject(*this, m_linkedTrap);
 }
 
-void GameObject::BuildValuesCreate(ByteBuffer* data, Player const* target) const
+void GameObject::BuildValuesCreate(ByteBuffer* data, UF::UpdateFieldFlag flags, Player const* target) const
 {
-    UF::UpdateFieldFlag flags = GetUpdateFieldFlagsFor(target);
-    std::size_t sizePos = data->wpos();
-    *data << uint32(0);
-    *data << uint8(flags);
     m_objectData->WriteCreate(*data, flags, this, target);
     m_gameObjectData->WriteCreate(*data, flags, this, target);
-    data->put<uint32>(sizePos, data->wpos() - sizePos - 4);
 }
 
-void GameObject::BuildValuesUpdate(ByteBuffer* data, Player const* target) const
+void GameObject::BuildValuesUpdate(ByteBuffer* data, UF::UpdateFieldFlag flags, Player const* target) const
 {
-    UF::UpdateFieldFlag flags = GetUpdateFieldFlagsFor(target);
-    std::size_t sizePos = data->wpos();
-    *data << uint32(0);
     *data << uint32(m_values.GetChangedObjectTypeMask());
 
     if (m_values.HasChanged(TYPEID_OBJECT))
@@ -4026,8 +4038,6 @@ void GameObject::BuildValuesUpdate(ByteBuffer* data, Player const* target) const
 
     if (m_values.HasChanged(TYPEID_GAMEOBJECT))
         m_gameObjectData->WriteUpdate(*data, flags, this, target);
-
-    data->put<uint32>(sizePos, data->wpos() - sizePos - 4);
 }
 
 void GameObject::BuildValuesUpdateForPlayerWithMask(UpdateData* data, UF::ObjectData::Mask const& requestedObjectMask,
