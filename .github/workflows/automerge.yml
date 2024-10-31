@@ -14,12 +14,16 @@ env:
 
   # replace "long-lived_branch_name" with your branch name
   MY_BRANCH: master
+  MY_BRANCH_CATA: cata_classic
+  MY_BRANCH_335: 3.3.5
 
   # replace it with the path to master repo
   MASTER_REPO: https://github.com/TrinityCore/TrinityCore.git
 
   # replace "master" with your master branch name
   MASTER_BRANCH: master
+  MASTER_BRANCH_CATA: cata_classic
+  MASTER_BRANCH_335: 3.3.5
 
 jobs:
   merge:
@@ -29,9 +33,23 @@ jobs:
     - name: Merge with master
       run: |
         git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH}} tmp
+        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH_CATA}} tmp2
+        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH_335}} tmp3
         cd tmp
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
         git config pull.rebase false
         git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH}}
+        cd tmp2
+        git config user.name github-actions[bot]
+        git config user.email github-actions[bot]@users.noreply.github.com
+        git config pull.rebase false
+        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_CATA}}
+        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_335}}
+        cd tmp3
+        git config user.name github-actions[bot]
+        git config user.email github-actions[bot]@users.noreply.github.com
+        git config pull.rebase false
+        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_CATA}}
+        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_335}}
         git push
