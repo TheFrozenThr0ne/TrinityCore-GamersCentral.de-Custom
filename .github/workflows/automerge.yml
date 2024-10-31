@@ -33,23 +33,25 @@ jobs:
     - name: Merge with master
       run: |
         git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH}} tmp
-        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH_CATA}} tmp2
-        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH_335}} tmp3
         cd tmp
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
         git config pull.rebase false
         git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH}}
+        git push
+      
+        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH_CATA}} tmp2
         cd tmp2
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
         git config pull.rebase false
         git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_CATA}}
-        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_335}}
+        git push
+
+        git clone ${{env.MY_REPO}} -b ${{env.MY_BRANCH_335}} tmp3
         cd tmp3
         git config user.name github-actions[bot]
         git config user.email github-actions[bot]@users.noreply.github.com
         git config pull.rebase false
-        git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_CATA}}
         git pull ${{env.MASTER_REPO}} ${{env.MASTER_BRANCH_335}}
         git push
