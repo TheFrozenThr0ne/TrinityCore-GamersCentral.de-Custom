@@ -159,15 +159,15 @@ public:
     }
 };
 
-#define LOCALE_LICHKING_0 "I wish to skip the Death Knight starter questline."
-#define LOCALE_LICHKING_1 "??? ?? ??? ??? ??? ???? ????."
-#define LOCALE_LICHKING_2 "Je souhaite sauter la s�rie de qu�tes de d�marrage du Chevalier de la mort."
-#define LOCALE_LICHKING_3 "Ich m�chte die Todesritter-Starter-Questreihe �berspringen."
-#define LOCALE_LICHKING_4 "??????????????"
-#define LOCALE_LICHKING_5 "??????????????"
-#define LOCALE_LICHKING_6 "Deseo saltarme la l�nea de misiones de inicio del Caballero de la Muerte."
-#define LOCALE_LICHKING_7 "Deseo saltarme la l�nea de misiones de inicio del Caballero de la Muerte."
-#define LOCALE_LICHKING_8 "? ???? ?????????? ????????? ??????? ??????? ?????? ??????."
+constexpr auto LOCALE_LICHKING_0 = "I wish to skip the Death Knight starter questline.";
+constexpr auto LOCALE_LICHKING_1 = "죽음의 기사 스타터 퀘스트 라인을 건너뛰고 싶습니다.";
+constexpr auto LOCALE_LICHKING_2 = "Je souhaite sauter la série de quêtes de démarrage du Chevalier de la mort.";
+constexpr auto LOCALE_LICHKING_3 = "Ich möchte die Todesritter-Starter-Questreihe überspringen.";
+constexpr auto LOCALE_LICHKING_4 = "我想跳過死亡騎士新手任務線。";
+constexpr auto LOCALE_LICHKING_5 = "我想跳過死亡騎士新手任務線。";
+constexpr auto LOCALE_LICHKING_6 = "Deseo saltarme la línea de misiones de inicio del Caballero de la Muerte.";
+constexpr auto LOCALE_LICHKING_7 = "Deseo saltarme la línea de misiones de inicio del Caballero de la Muerte.";
+constexpr auto LOCALE_LICHKING_8 = "Я хочу пропустить начальную цепочку заданий Рыцаря Смерти.";
 
 class Trinitycore_optional_deathknight_skip : public CreatureScript
 {
