@@ -95,7 +95,7 @@ namespace {
         void OnLogin(Player* player, bool /*firstLogin*/) override {
             if (sConfigMgr->GetBoolDefault("Solocraft.Enable", true))
             {
-               ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00SoloCraft |rmodule.");
+               ChatHandler(player->GetSession()).SendSysMessage("This server is running |cff4CFF00SoloCraft");
             }
         }
 

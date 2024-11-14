@@ -38,7 +38,7 @@ public:
 			// Announce Module
 			if (sConfigMgr->GetBoolDefault("GamblerNPC.Announce", true))
 			{
-				ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00GamblerNPC |rmodule.");
+				ChatHandler(player->GetSession()).SendSysMessage("This server is running |cff4CFF00GamblerNPC");
 			}
 		}
     }

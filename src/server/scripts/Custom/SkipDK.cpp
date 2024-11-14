@@ -135,7 +135,7 @@ public:
     {
         if (sConfigMgr->GetBoolDefault("Skip.Deathknight.Starter.Announce.enable", true))
         {
-            ChatHandler(Player->GetSession()).SendSysMessage("This server is running the |cff4CFF00Trinitycore Skip Deathknight Starter |rmodule.");
+            ChatHandler(Player->GetSession()).SendSysMessage("This server is running |cff4CFF00Skip Deathknight Starter");
         }
     }
 };

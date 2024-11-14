@@ -21,26 +21,20 @@
 // void Add${NameOfDirectory}Scripts()
 
 void AddRewardShopScripts();
-void AddSC_npc_promotion();
 void AddSC_AllMountsNPCScripts();
-void AddNPCGamblerScripts();
 void AddSC_skip_StarterArea();
 void AddSC_SkipStartingNPCScripts();
 void AddLfgSoloScripts();
-void AddRewardSystemScripts();
 void AddSC_FallEvent();
 void AddSC_PlayerlocalflagScripts();
 
 void AddCustomScripts()
 {
     AddRewardShopScripts();
-    AddSC_npc_promotion();
     AddSC_AllMountsNPCScripts();
-    AddNPCGamblerScripts();
 	AddSC_skip_StarterArea();
     AddSC_SkipStartingNPCScripts();
     AddLfgSoloScripts();
-    AddRewardSystemScripts();
     AddSC_FallEvent();
     AddSC_PlayerlocalflagScripts();
 }

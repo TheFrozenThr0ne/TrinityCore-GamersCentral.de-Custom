@@ -19,8 +19,8 @@ FallEvent
 NPC All Mounts
 NPC Gambler
 NPC Jukebox -- must be applied manually to the database - core auto update Outputs an error.
-NPC Paymaster
 NPC Portal Master -- 1 hotfixes file for broadcast_text for specify page.
 NPC Promotion
 NPC Reward Shop
 NPC Skip Starting
+Skip DeathKnight Starter

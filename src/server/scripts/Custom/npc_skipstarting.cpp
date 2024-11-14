@@ -25,7 +25,7 @@ public:
             // Announce Module
             if (sConfigMgr->GetBoolDefault("SkipStartingNPC.Announce", true))
             {
-                ChatHandler(player->GetSession()).SendSysMessage("This server is running |cff4CFF00Skip - Starting - NPC");
+                ChatHandler(player->GetSession()).SendSysMessage("This server is running |cff4CFF00Skip Allied+ Starting");
             }
     }
 };
