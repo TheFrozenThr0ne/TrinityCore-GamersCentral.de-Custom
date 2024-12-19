@@ -422,6 +422,13 @@ NonDefaultConstructible<SpellEffectHandlerFn> SpellEffectHandlers[TOTAL_SPELL_EF
     &Spell::EffectNULL,                                     //331 SPELL_EFFECT_331
     &Spell::EffectNULL,                                     //332 SPELL_EFFECT_332
     &Spell::EffectNULL,                                     //333 SPELL_EFFECT_333
+    &Spell::EffectNULL,                                     //334 SPELL_EFFECT_334
+    &Spell::EffectNULL,                                     //335 SPELL_EFFECT_335
+    &Spell::EffectNULL,                                     //336 SPELL_EFFECT_336
+    &Spell::EffectNULL,                                     //337 SPELL_EFFECT_337
+    &Spell::EffectNULL,                                     //338 SPELL_EFFECT_338
+    &Spell::EffectNULL,                                     //339 SPELL_EFFECT_UI_ACTION
+    &Spell::EffectNULL,                                     //340 SPELL_EFFECT_340
 };
 
 void Spell::EffectNULL()
@@ -1652,7 +1659,7 @@ void Spell::EffectOpenLock()
     }
 
     if (gameObjTarget)
-        gameObjTarget->Use(player);
+        gameObjTarget->Use(player, true);
     else if (itemTarget)
     {
         itemTarget->SetItemFlag(ITEM_FIELD_FLAG_UNLOCKED);
@@ -2182,7 +2189,7 @@ void Spell::EffectDispel()
 
     CallScriptSuccessfulDispel(SpellEffIndex(effectInfo->EffectIndex));
 
-    m_hitMask |= PROC_HIT_DISPEL;
+    std::ranges::find(m_UniqueTargetInfo, unitTarget->GetGUID(), &TargetInfo::TargetGUID)->ProcHitMask |= PROC_HIT_DISPEL;
 }
 
 void Spell::EffectDualWield()
@@ -2938,7 +2945,7 @@ void Spell::EffectInterruptCast()
                 int32 duration = m_spellInfo->GetDuration();
                 duration = unitTarget->ModSpellDuration(m_spellInfo, unitTarget, duration, false, 1 << effectInfo->EffectIndex);
                 unitTarget->GetSpellHistory()->LockSpellSchool(curSpellInfo->GetSchoolMask(), Milliseconds(duration));
-                m_hitMask |= PROC_HIT_INTERRUPT;
+                std::ranges::find(m_UniqueTargetInfo, unitTarget->GetGUID(), &TargetInfo::TargetGUID)->ProcHitMask |= PROC_HIT_INTERRUPT;
                 SendSpellInterruptLog(unitTarget, curSpellInfo->Id);
                 unitTarget->InterruptSpell(CurrentSpellTypes(i), false);
             }
@@ -4176,7 +4183,7 @@ void Spell::EffectDispelMechanic()
     for (auto itr = dispel_list.begin(); itr != dispel_list.end(); ++itr)
         unitTarget->RemoveAura(itr->first, itr->second, 0, AURA_REMOVE_BY_ENEMY_SPELL);
 
-    m_hitMask |= PROC_HIT_DISPEL;
+    std::ranges::find(m_UniqueTargetInfo, unitTarget->GetGUID(), &TargetInfo::TargetGUID)->ProcHitMask |= PROC_HIT_DISPEL;
 }
 
 void Spell::EffectResurrectPet()
@@ -4741,7 +4748,7 @@ void Spell::EffectStealBeneficialBuff()
 
     m_caster->SendMessageToSet(spellDispellLog.Write(), true);
 
-    m_hitMask |= PROC_HIT_DISPEL;
+    std::ranges::find(m_UniqueTargetInfo, unitTarget->GetGUID(), &TargetInfo::TargetGUID)->ProcHitMask |= PROC_HIT_DISPEL;
 }
 
 void Spell::EffectKillCreditPersonal()
