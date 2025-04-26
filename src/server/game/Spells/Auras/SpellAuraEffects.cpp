@@ -2578,7 +2578,7 @@ void AuraEffect::HandleAuraModNoActions(AuraApplication const* aurApp, uint8 mod
         target->SetUnitFlag2(UNIT_FLAG2_NO_ACTIONS);
 
         // call functions which may have additional effects after chainging state of unit
-        // Stop cast only spells vs PreventionType & SPELL_PREVENTION_TYPE_SILENCE
+        // Stop cast only spells vs PreventionType & SPELL_PREVENTION_TYPE_NO_ACTIONS
         for (uint32 i = CURRENT_MELEE_SPELL; i < CURRENT_MAX_SPELL; ++i)
             if (Spell* spell = target->GetCurrentSpell(CurrentSpellTypes(i)))
                 if (spell->m_spellInfo->PreventionType & SPELL_PREVENTION_TYPE_NO_ACTIONS)
@@ -5791,6 +5791,8 @@ void AuraEffect::HandlePeriodicHealthLeechAuraTick(Unit* target, Unit* caster) c
     uint32 resist = damageInfo.GetResist();
     TC_LOG_DEBUG("spells.aura.effect", "PeriodicTick: {} health leech of {} for {} dmg inflicted by {} abs is {}",
         GetCasterGUID().ToString(), target->GetGUID().ToString(), damage, GetId(), absorb);
+
+    Unit::DealDamageMods(caster, target, damage, &absorb);
 
     // SendSpellNonMeleeDamageLog expects non-absorbed/non-resisted damage
     SpellNonMeleeDamage log(caster, target, GetSpellInfo(), GetBase()->GetSpellVisual(), GetSpellInfo()->GetSchoolMask(), GetBase()->GetCastId());
