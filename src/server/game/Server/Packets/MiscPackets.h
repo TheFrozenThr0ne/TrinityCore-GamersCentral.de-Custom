@@ -1011,6 +1011,18 @@ namespace WorldPackets
             uint32 CurrencyID = 0;
         };
 
+        // GCCore >
+        class CovenantPreviewOpenNpc  final : public ServerPacket
+        {
+        public:
+            CovenantPreviewOpenNpc() : ServerPacket(SMSG_COVENANT_PREVIEW_OPEN_NPC) {}
+
+            WorldPacket const* Write() override;
+
+            ObjectGuid ObjGUID;
+            int32 CovenantId = 0;
+        };
+
         class AccountWarbandSceneUpdate final : public ServerPacket
         {
         public:

@@ -94,6 +94,9 @@ class TC_GAME_API Creature : public Unit, public GridObject<Creature>, public Ma
 
         void DisappearAndDie() { ForcedDespawn(0); }
 
+        //GCCore
+        uint32 GetVignetteId() const { return m_creatureInfo ? m_creatureInfo->VignetteID : 0; }
+
         bool Create(ObjectGuid::LowType guidlow, Map* map, uint32 entry, Position const& pos, CreatureData const* data, uint32 vehId, bool dynamic = false);
 
         static Creature* CreateCreature(uint32 entry, Map* map, Position const& pos, uint32 vehId = 0);

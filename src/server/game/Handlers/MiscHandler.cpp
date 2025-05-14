@@ -1204,3 +1204,11 @@ void WorldSession::HandleQueryCountdownTimer(WorldPackets::Misc::QueryCountdownT
 
     _player->SendDirectMessage(startTimer.Write());
 }
+
+void WorldSession::SendCovenantPreview(ObjectGuid sender, int32 covenantID)
+{
+    WorldPackets::Misc::CovenantPreviewOpenNpc result;
+    result.ObjGUID = sender;
+    result.CovenantId = covenantID;
+    SendPacket(result.Write());
+}

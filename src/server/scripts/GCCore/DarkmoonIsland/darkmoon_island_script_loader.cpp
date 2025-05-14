@@ -1,6 +1,6 @@
 /*
- * This file is part of the TrinityCore Project. See AUTHORS file for Copyright information
- *
+ * Copyright (C) 2020 LatinCoreTeam
+ * Copyright (C) 2022 DekkCore
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
  * Free Software Foundation; either version 2 of the License, or (at your
@@ -16,24 +16,20 @@
  */
 
 // This is where scripts' loading functions should be declared:
+void AddSC_darkmoon_canon();
+void AddSC_darkmoon_island();
+void AddSC_darkmoon_rabbit();
+void AddSC_darkmoon_tonk();
+void AddSC_darkmoon_whack_gnoll();
+
 
 // The name of this function should match:
 // void Add${NameOfDirectory}Scripts()
-void AddRewardShopScripts();
-void AddSC_AllMountsNPCScripts();
-void AddSC_skip_StarterArea();
-void AddSC_SkipStartingNPCScripts();
-void AddLfgSoloScripts();
-void AddSC_FallEvent();
-void AddSC_PlayerlocalflagScripts();
-
-void AddCustomScripts()
+void AddDarkmoonIslandScripts()
 {
-    AddRewardShopScripts();
-    AddSC_AllMountsNPCScripts();
-	AddSC_skip_StarterArea();
-    AddSC_SkipStartingNPCScripts();
-    AddLfgSoloScripts();
-    AddSC_FallEvent();
-    AddSC_PlayerlocalflagScripts();
+    AddSC_darkmoon_canon();
+    AddSC_darkmoon_island();
+    AddSC_darkmoon_rabbit();
+    AddSC_darkmoon_tonk();
+    AddSC_darkmoon_whack_gnoll();
 }

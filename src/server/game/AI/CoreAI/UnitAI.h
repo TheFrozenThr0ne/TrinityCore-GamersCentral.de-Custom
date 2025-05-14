@@ -162,6 +162,7 @@ class TC_GAME_API UnitAI
         SpellCastResult DoCastAOE(uint32 spellId, CastSpellExtraArgs const& args = {}) { return DoCast(nullptr, spellId, args); }
 
         bool DoSpellAttackIfReady(uint32 spellId);
+        void DoMeleeAttackIfReady();
 
         static std::unordered_map<std::pair<uint32, Difficulty>, AISpellInfoType> AISpellInfo;
         static void FillAISpellInfo();

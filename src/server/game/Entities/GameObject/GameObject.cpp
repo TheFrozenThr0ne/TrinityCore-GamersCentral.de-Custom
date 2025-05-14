@@ -4627,3 +4627,10 @@ SpellInfo const* GameObject::GetSpellForLock(Player const* player) const
 
     return nullptr;
 }
+
+//GCCore
+
+uint32 GameObject::GetVignetteId() const
+{
+    return m_goInfo ? m_goInfo->GetVignetteId() : 0;
+}

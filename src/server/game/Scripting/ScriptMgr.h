@@ -1420,4 +1420,6 @@ public:
 
 #define sScriptMgr ScriptMgr::instance()
 
+#define RegisterPlayerScript(script) new script()
+
 #endif

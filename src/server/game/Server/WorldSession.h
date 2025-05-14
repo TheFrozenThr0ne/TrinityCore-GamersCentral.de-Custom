@@ -2015,6 +2015,13 @@ class TC_GAME_API WorldSession
 
         WorldSession(WorldSession const& right) = delete;
         WorldSession& operator=(WorldSession const& right) = delete;
+
+        // GCCore >
+        public:
+            // Covenant
+            void SendCovenantPreview(ObjectGuid sender, int32 covenantID);
+            // Others
+            // < GCCore
 };
 
 #endif

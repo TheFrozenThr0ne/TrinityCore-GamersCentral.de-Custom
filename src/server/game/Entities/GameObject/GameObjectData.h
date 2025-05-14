@@ -1342,6 +1342,22 @@ struct GameObjectTemplate
         }
     }
 
+    uint32 GetVignetteId() const
+    {
+        switch (type)
+        {
+        case GAMEOBJECT_TYPE_CHEST:
+            return chest.SpawnVignette;
+        case GAMEOBJECT_TYPE_GOOBER:
+            return goober.SpawnVignette;
+        case GAMEOBJECT_TYPE_GATHERING_NODE:
+            return gatheringNode.SpawnVignette;
+        case GAMEOBJECT_TYPE_CAPTURE_POINT:
+            return capturePoint.SpawnVignette;
+        default: return 0;
+        }
+    }
+
     bool IsDisplayMandatory() const
     {
         switch (type)

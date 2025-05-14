@@ -931,6 +931,7 @@ class TC_GAME_API WorldObject : public Object, public WorldLocation
         SmoothPhasing* GetSmoothPhasing() { return _smoothPhasing.get(); }
         SmoothPhasing const* GetSmoothPhasing() const { return _smoothPhasing.get(); }
 
+        std::list<Creature*> FindNearestCreatures(std::list<uint32> entrys, float range) const;
     protected:
         std::string m_name;
         bool m_isActive;
@@ -986,6 +987,10 @@ class TC_GAME_API WorldObject : public Object, public WorldLocation
         bool CanDetect(WorldObject const* obj, bool ignoreStealth, bool checkAlert = false) const;
         bool CanDetectInvisibilityOf(WorldObject const* obj) const;
         bool CanDetectStealthOf(WorldObject const* obj, bool checkAlert = false) const;
+
+        // GCCore >
+    public:
+        std::list<Creature*> FindNearestCreatures(uint32 entry, float range) const;
 };
 
 namespace Trinity

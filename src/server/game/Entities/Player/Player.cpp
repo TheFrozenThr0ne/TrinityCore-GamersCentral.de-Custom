@@ -17090,6 +17090,24 @@ bool Player::HasQuestForCurrency(uint32 currencyId) const
     return false;
 }
 
+// This function gets the completed quest objective count for player by questid and storageindex of the quest objective
+int32 Player::GetQuestObjectiveProgress(uint32 questId, int8 storageIndex) const
+{
+    Quest const* qInfo = sObjectMgr->GetQuestTemplate(questId);
+    if (!qInfo)
+        return 0;
+
+    uint16 slot = FindQuestSlot(questId);
+    if (slot >= MAX_QUEST_LOG_SIZE)
+        return 0;
+
+    for (QuestObjective const& obj : qInfo->GetObjectives())
+        if (obj.StorageIndex == storageIndex)
+            return GetQuestSlotObjectiveData(slot, obj);
+
+    return 0;
+}
+
 int32 Player::GetQuestObjectiveData(QuestObjective const& objective) const
 {
     uint16 slot = FindQuestSlot(objective.QuestID);
@@ -31066,4 +31084,97 @@ bool Player::CanExecutePendingSpellCastRequest()
         return false;
 
     return true;
+}
+
+void Player::ForceCompleteQuest(uint32 questID)
+{
+    bool debug = false; // set this true if you want to debug in console
+
+    Player* player = this;
+
+    if (debug)
+        TC_LOG_DEBUG("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest called for player {} in quest: {}.", player->GetName().c_str(), questID);
+
+    Quest const* quest = sObjectMgr->GetQuestTemplate(questID);
+    if (!quest)
+        return;
+
+    for (uint32 i = 0; i < quest->Objectives.size(); ++i)
+    {
+        QuestObjective const& obj = quest->Objectives[i];
+
+        switch (obj.Type)
+        {
+        case QUEST_OBJECTIVE_ITEM:
+        {
+            uint32 curItemCount = player->GetItemCount(obj.ObjectID, true);
+            ItemPosCountVec dest;
+            uint8 msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, obj.ObjectID, obj.Amount - curItemCount);
+            if (msg == EQUIP_ERR_OK)
+            {
+                Item* item = player->StoreNewItem(dest, obj.ObjectID, true);
+                player->SendNewItem(item, obj.Amount - curItemCount, true, false);
+            }
+
+            if (debug)
+                TC_LOG_INFO("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest QUEST_OBJECTIVE_ITEM id: {}, amount: {}.", obj.ObjectID, obj.Amount);
+            break;
+        }
+        case QUEST_OBJECTIVE_MONSTER:
+        {
+            if (CreatureTemplate const* creatureInfo = sObjectMgr->GetCreatureTemplate(obj.ObjectID))
+                for (uint16 z = 0; z < obj.Amount; ++z)
+                    player->KilledMonsterCredit(creatureInfo->Entry, ObjectGuid::Empty);
+
+            if (debug)
+                TC_LOG_INFO("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest QUEST_OBJECTIVE_MONSTER id: {}, amount: {}.", obj.ObjectID, obj.Amount);
+            break;
+        }
+        case QUEST_OBJECTIVE_GAMEOBJECT:
+        {
+            for (uint16 z = 0; z < obj.Amount; ++z)
+                player->KillCreditGO(obj.ObjectID);
+
+            if (debug)
+                TC_LOG_INFO("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest QUEST_OBJECTIVE_GAMEOBJECT id: {}, amount: {}.", obj.ObjectID, obj.Amount);
+            break;
+        }
+        case QUEST_OBJECTIVE_MIN_REPUTATION:
+        {
+            uint32 curRep = player->GetReputationMgr().GetReputation(obj.ObjectID);
+            if (curRep < uint32(obj.Amount))
+                if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(obj.ObjectID))
+                    player->GetReputationMgr().SetReputation(factionEntry, obj.Amount);
+
+            if (debug)
+                TC_LOG_INFO("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest QUEST_OBJECTIVE_MIN_REPUTATION id: {}, amount: {}.", obj.ObjectID, obj.Amount);
+            break;
+        }
+        case QUEST_OBJECTIVE_MAX_REPUTATION:
+        {
+            uint32 curRep = player->GetReputationMgr().GetReputation(obj.ObjectID);
+            if (curRep > uint32(obj.Amount))
+                if (FactionEntry const* factionEntry = sFactionStore.LookupEntry(obj.ObjectID))
+                    player->GetReputationMgr().SetReputation(factionEntry, obj.Amount);
+
+            if (debug)
+                TC_LOG_INFO("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest QUEST_OBJECTIVE_MAX_REPUTATION id: {}, amount: {}.", obj.ObjectID, obj.Amount);
+            break;
+        }
+        case QUEST_OBJECTIVE_MONEY:
+        {
+            player->ModifyMoney(obj.Amount);
+
+            if (debug)
+                TC_LOG_INFO("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest QUEST_OBJECTIVE_MONEY amount: {}.", obj.Amount);
+            break;
+        }
+        }
+    }
+
+    if (player->GetQuestStatus(questID) != QUEST_STATUS_COMPLETE)
+        player->CompleteQuest(questID);
+
+    if (debug)
+        TC_LOG_INFO("server.FluxurionDebug", "Fluxurion::ForceCompleteQuest ended.");
 }

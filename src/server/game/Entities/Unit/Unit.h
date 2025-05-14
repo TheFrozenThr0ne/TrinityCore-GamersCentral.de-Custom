@@ -25,6 +25,7 @@
 #include "ThreatManager.h"
 #include "Timer.h"
 #include "UnitDefines.h"
+#include "TaskScheduler.h"
 #include "Util.h"
 #include <array>
 #include <forward_list>
@@ -1957,8 +1958,18 @@ class TC_GAME_API Unit : public WorldObject
         virtual void AtDisengage() {}
 
     public:
+        TaskScheduler scheduler;
+        TaskScheduler& GetScheduler() { return scheduler; }
         void AtStartOfEncounter(EncounterType type);
         void AtEndOfEncounter(EncounterType type);
+
+        void AddDelayedEvent(uint32 timeout, std::function<void()>&& function)
+        {
+            emptyWarned = false;
+            timedDelayedOperations.push_back(std::pair<uint32, std::function<void()>>(timeout, function));
+        }
+        std::vector<std::pair<int32, std::function<void()>>>timedDelayedOperations; ///< Delayed operations
+        bool emptyWarned; ///< Warning when there are no more delayed operations
 
     private:
 

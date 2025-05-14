@@ -1734,6 +1734,7 @@ class TC_GAME_API Player final : public Unit, public GridObject<Player>
         QuestObjective const* GetQuestObjectiveForItem(uint32 itemId, bool onlyIncomplete) const;
         bool HasQuestForGO(int32 goId) const;
         bool HasQuestForCurrency(uint32 currencyId) const;
+        int32 GetQuestObjectiveProgress(uint32 questId, int8 storageIndex) const;
         void UpdateVisibleObjectInteractions(bool allUnits, bool onlySpellClicks, bool gameObjectQuestGiverStatus, bool questObjectiveGameObjects);
         bool CanShareQuest(uint32 questId) const;
 
@@ -3333,6 +3334,7 @@ class TC_GAME_API Player final : public Unit, public GridObject<Player>
         void RequestSpellCast(std::unique_ptr<SpellCastRequest> castRequest);
         void CancelPendingCastRequest();
         bool CanRequestSpellCast(SpellInfo const* spell, Unit const* castingUnit) const;
+        void ForceCompleteQuest(uint32 questId);
 
     private:
         std::unique_ptr<SpellCastRequest> _pendingSpellCastRequest;

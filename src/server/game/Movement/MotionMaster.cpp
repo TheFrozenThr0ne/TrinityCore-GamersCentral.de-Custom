@@ -697,6 +697,32 @@ void MotionMaster::MoveCloserAndStop(uint32 id, Unit* target, float distance)
     }
 }
 
+void MotionMaster::MoveSmoothPath(uint32 pointId, Position const* pathPoints, size_t pathSize, bool walk, bool fly)
+{
+    Movement::PointsArray path;
+    path.reserve(pathSize);
+    std::transform(pathPoints, pathPoints + pathSize, std::back_inserter(path), [](Position const& point)
+        {
+            return G3D::Vector3(point.GetPositionX(), point.GetPositionY(), point.GetPositionZ());
+        });
+    std::function<void(Movement::MoveSplineInit&)> initializer = [=](Movement::MoveSplineInit& init)
+        {
+            init.MovebyPath(path);
+            init.SetWalk(walk);
+            if (fly)
+            {
+                init.SetFly();
+                init.SetUncompressed();
+                init.SetSmooth();
+            }
+        };
+
+    // This code is not correct
+    // GenericMovementGenerator does not affect UNIT_STATE_ROAMING_MOVE
+    // need to call PointMovementGenerator with various pointIds
+    Add(new GenericMovementGenerator(std::move(initializer), EFFECT_MOTION_TYPE, pointId));
+}
+
 void MotionMaster::MoveLand(uint32 id, Position const& pos, Optional<int32> tierTransitionId /*= {}*/, Optional<float> velocity /*= {}*/,
     MovementWalkRunSpeedSelectionMode speedSelectionMode /*= MovementWalkRunSpeedSelectionMode::Default*/,
     Optional<Scripting::v2::ActionResultSetter<MovementStopReason>>&& scriptResult /*= {}*/)

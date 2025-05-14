@@ -131,3 +131,23 @@ void EventProcessor::ModifyEventTime(BasicEvent* event, Milliseconds newTime)
         break;
     }
 }
+
+void EventProcessor::AddDelayedEvent(uint64 t_offset, std::function<void()>&& function)
+{
+    class LambdaEvent : public BasicEvent
+    {
+    public:
+        explicit LambdaEvent(std::function<void()>&& f) : _function(std::move(f)) {}
+
+        bool Execute(uint64 /*time*/, uint32 /*diff*/) override
+        {
+            _function();
+            return true; // einmalige Ausführung
+        }
+
+    private:
+        std::function<void()> _function;
+    };
+
+    AddEvent(new LambdaEvent(std::move(function)), Milliseconds(m_time + t_offset), true);
+}

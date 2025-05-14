@@ -24,6 +24,7 @@
 #include <concepts>
 #include <map>
 #include <type_traits>
+#include <functional> // Add this include for std::function
 
 class EventProcessor;
 
@@ -99,6 +100,8 @@ class TC_COMMON_API EventProcessor
 
         void Update(uint32 p_time);
         void KillAllEvents(bool force);
+
+        void AddDelayedEvent(uint64 t_offset, std::function<void()>&& function);
 
         void AddEvent(BasicEvent* event, Milliseconds e_time, bool set_addtime = true);
         template<std::invocable<> T>

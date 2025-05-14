@@ -533,5 +533,10 @@ class TC_GAME_API GameObject : public WorldObject, public GridObject<GameObject>
         std::unique_ptr<std::unordered_map<ObjectGuid, PerPlayerState>> m_perPlayerState;
 
         std::unordered_map<ObjectGuid, PerPlayerState>& GetOrCreatePerPlayerStates();
+
+        // GCCore >
+    public:
+        uint32 GetVignetteId() const;
+        // < GCCore
 };
 #endif
