@@ -415,7 +415,6 @@ private:
                         {
                             player->GetScheduler().Schedule(Milliseconds(5000), [this, player](TaskContext /*context*/)
                                 {
-
                                     player->KilledMonsterCredit(164579);
                                     if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                         delen->AI()->Talk(0);
@@ -968,7 +967,6 @@ private:
                 Talk(3);
                 scheduler.Schedule(Milliseconds(10000), [this](TaskContext /*context*/)
                     {
-                        (void)this;
                         if (Creature* darion = me->FindNearestCreature(170640, 30.0f))
                             darion->AI()->Talk(0);
                     }).Schedule(Milliseconds(13000), [this](TaskContext /*context*/)
