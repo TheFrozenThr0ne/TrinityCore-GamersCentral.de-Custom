@@ -70,7 +70,7 @@ public:
 
         bool Active;
 
-        void Reset()
+        void Reset() override
         {
             Active = false;
         }
