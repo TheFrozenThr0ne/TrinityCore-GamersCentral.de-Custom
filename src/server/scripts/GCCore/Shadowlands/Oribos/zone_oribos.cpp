@@ -421,21 +421,21 @@ private:
                                         delen->AI()->Talk(0);
                                 }).Schedule(Milliseconds(14000), [this](TaskContext context)
                                     {
-                                        (void)this;
+                                        (void)context;
                                         if (Creature* sher = GetClosestCreatureWithEntry(me, 167424, 20.0f))
                                             sher->AI()->Talk(0);
                                     }).Schedule(Milliseconds(20000), [this, protector](TaskContext context)
                                         {
-                                            (void)this;
+                                            (void)context;
                                             protector->AI()->Talk(1);
                                         }).Schedule(Milliseconds(29000), [this](TaskContext context)
                                             {
-                                                (void)this;
+                                                (void)context;
                                                 if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     delen->AI()->Talk(1);
                                             }).Schedule(Milliseconds(40000), [this, protector](TaskContext context)
                                                 {
-                                                    (void)this;
+                                                    (void)context;
                                                     if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     {
                                                         delen->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
