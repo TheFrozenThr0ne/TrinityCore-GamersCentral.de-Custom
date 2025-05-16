@@ -363,7 +363,7 @@ private:
         if (me->IsQuestGiver())
             player->PrepareQuestMenu(me->GetGUID());
 
-        if (!player->GetQuestObjectiveProgress(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND, 0))
+        if (!player->GetQuestObjectiveData(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND, 0))
             AddGossipItemFor(player, GossipOptionNpc::None, "Where am I? Have I escaped the Maw?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 0);
 
         SendGossipMenuFor(player, player->GetGossipTextId(me), me->GetGUID());
@@ -460,13 +460,14 @@ private:
 
         if (Player* player = target->ToPlayer())
             if (target->GetDistance2d(me) <= 10.0f)
-                if (!player->GetQuestObjectiveProgress(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND, 0))
+                if (!player->GetQuestObjectiveData(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND, 0))
                     if (!say60129)
                     {
                         if (Creature* protector = me->FindNearestCreature(172532, 15.0f))
                             protector->AI()->Talk(0);
-                        player->GetScheduler().Schedule(Milliseconds(7000), [this](TaskContext context)
+                        player->GetScheduler().Schedule(Milliseconds(7000), [this](TaskContext /*context*/)
                             {
+                                (void)this;
                                 me->AI()->Talk(0);
                             });
                         say60129 = true;
@@ -625,22 +626,22 @@ private:
             player->PrepareQuestMenu(me->GetGUID());
         if (player->hasQuest(QUEST_AUDIENCE_WITH_THE_ARBITER))
         {
-            if (!player->GetQuestObjectiveProgress(QUEST_AUDIENCE_WITH_THE_ARBITER, 1))
+            if (!player->GetQuestObjectiveData(QUEST_AUDIENCE_WITH_THE_ARBITER, 1))
                 AddGossipItemFor(player, GossipOptionNpc::None, "What is this place?", 26362, GOSSIP_ACTION_INFO_DEF + 1);
 
-            if (player->GetQuestObjectiveProgress(QUEST_AUDIENCE_WITH_THE_ARBITER, 1) && !player->GetQuestObjectiveProgress(QUEST_AUDIENCE_WITH_THE_ARBITER, 2))
+            if (player->GetQuestObjectiveData(QUEST_AUDIENCE_WITH_THE_ARBITER, 1) && !player->GetQuestObjectiveData(QUEST_AUDIENCE_WITH_THE_ARBITER, 2))
                 AddGossipItemFor(player, GossipOptionNpc::None, "I am ready to return.", 26362, GOSSIP_ACTION_INFO_DEF + 2);
         }
         if (player->hasQuest(QUEST_VOICES_OF_THE_ETERNAL))
         {
-            if (!player->GetQuestObjectiveProgress(QUEST_VOICES_OF_THE_ETERNAL, 0))
+            if (!player->GetQuestObjectiveData(QUEST_VOICES_OF_THE_ETERNAL, 0))
             {
                 ClearGossipMenuFor(player);
                 SendGossipMenuFor(player, 42835, me->GetGUID());  // Show Next gossip and should not close
                 AddGossipItemFor(player, GossipOptionNpc::None, "I'm ready to begin.", 26362, GOSSIP_ACTION_INFO_DEF + 3);
             }
 
-            if (player->GetQuestObjectiveProgress(QUEST_VOICES_OF_THE_ETERNAL, 0) && !player->GetQuestObjectiveProgress(QUEST_VOICES_OF_THE_ETERNAL, 1))
+            if (player->GetQuestObjectiveData(QUEST_VOICES_OF_THE_ETERNAL, 0) && !player->GetQuestObjectiveData(QUEST_VOICES_OF_THE_ETERNAL, 1))
             {
                 ClearGossipMenuFor(player);
                 SendGossipMenuFor(player, 42835, me->GetGUID());  // Show Next gossip and should not close
@@ -667,7 +668,7 @@ private:
 
         case GOSSIP_ACTION_INFO_DEF + 2:
             CloseGossipMenuFor(player);
-            player->ForceCompleteQuest(QUEST_AUDIENCE_WITH_THE_ARBITER);
+            player->CompleteQuest(QUEST_AUDIENCE_WITH_THE_ARBITER);
             player->CastSpell(player, 328076);
             break;
 
@@ -679,7 +680,7 @@ private:
 
         case GOSSIP_ACTION_INFO_DEF + 4:
             CloseGossipMenuFor(player);
-            player->ForceCompleteQuest(QUEST_VOICES_OF_THE_ETERNAL);
+            player->CompleteQuest(QUEST_VOICES_OF_THE_ETERNAL);
             player->CastSpell(player, SPELL_TELE_TO_RING_OF_FALES);
             break;
         }
@@ -760,7 +761,7 @@ public:
         {
         case GOSSIP_ACTION_INFO_DEF + 0:
             CloseGossipMenuFor(player);
-            player->ForceCompleteQuest(QUEST_A_GATHERING_OF_COVENANTS);
+            player->CompleteQuest(QUEST_A_GATHERING_OF_COVENANTS);
             player->CastSpell(player, SPELL_TELE_TO_ARBITER_ROOM);
             break;
 
@@ -916,8 +917,8 @@ private:
             if (target->GetDistance2d(me) <= 15.0f)
             {
                 if (player->GetQuestStatus(QUEST_THE_ETERNAL_CITY) == QUEST_STATUS_INCOMPLETE
-                    && !player->GetQuestObjectiveProgress(QUEST_THE_ETERNAL_CITY, 4)
-                    && player->GetQuestObjectiveProgress(QUEST_THE_ETERNAL_CITY, 5))
+                    && !player->GetQuestObjectiveData(QUEST_THE_ETERNAL_CITY, 4)
+                    && player->GetQuestObjectiveData(QUEST_THE_ETERNAL_CITY, 5))
                 {
                     if (!say60152)
                     {
@@ -1133,7 +1134,7 @@ private:
                                 player->SummonGameObject(239332, -163.918f, 6917.27f, 12.6521f, 5.33958f, QuaternionData(), 0s);
                                 me->CastSpell(me, 339689);
                                 acolyte->CastSpell(acolyte, 339689);
-                                player->ForceCompleteQuest(QUEST_A_DOORWAY_THROUGH_THE_VEIL);
+                                player->CompleteQuest(QUEST_A_DOORWAY_THROUGH_THE_VEIL);
                             }
                     });
                 me->AddDelayedEvent(14000, [this]()
@@ -1169,8 +1170,9 @@ private:
             m_playerGUID = player->GetGUID();
             me->AI()->Talk(0);
         }
-        player->GetScheduler().Schedule(Milliseconds(10000), [this, player](TaskContext context)
+        player->GetScheduler().Schedule(Milliseconds(10000), [this, player](TaskContext /*context*/)
             {
+                (void)this;
                 LoadPath(me->GetEntry());
                 Start(true);
             });
@@ -1218,7 +1220,7 @@ public:
         {
             if (Player* player = GetCaster()->ToPlayer())
             {
-                if (player->GetQuestStatus(QUEST_THE_PATH_TO_BASTION) == QUEST_STATUS_INCOMPLETE && player->GetQuestObjectiveProgress(QUEST_THE_PATH_TO_BASTION, 0))
+                if (player->GetQuestStatus(QUEST_THE_PATH_TO_BASTION) == QUEST_STATUS_INCOMPLETE && player->GetQuestObjectiveData(QUEST_THE_PATH_TO_BASTION, 0))
                 {
                     player->KilledMonsterCredit(175133);
                     player->CastSpell(player, SCENE_QUEST_GATE_BASTION);
@@ -1274,7 +1276,7 @@ public:
             ClearGossipMenuFor(player);
             if (action == GOSSIP_ACTION_INFO_DEF + 0)//Maldraxxus
             {
-                player->ForceCompleteQuest(QUEST_IF_U_WANT_PEACE);
+                player->CompleteQuest(QUEST_IF_U_WANT_PEACE);
                 player->CastSpell(player, SPELL_FLY_TO_MALDRAXXUS);
             }
 
@@ -1322,7 +1324,7 @@ public:
             if (action == GOSSIP_ACTION_INFO_DEF + 0)//Bastion
             {
                 CloseGossipMenuFor(player);
-                player->ForceCompleteQuest(QUEST_SEEK_THE_ASCENDED);
+                player->CompleteQuest(QUEST_SEEK_THE_ASCENDED);
                 player->CastSpell(player, SPELL_FLY_TO_BASTION);
             }
             return true;
@@ -1367,7 +1369,7 @@ public:
 
                 if (player->hasQuest(QUEST_THE_FIRST_MOVE))
                 {
-                    player->ForceCompleteQuest(QUEST_THE_FIRST_MOVE);
+                    player->CompleteQuest(QUEST_THE_FIRST_MOVE);
                     player->CastSpell(player, MOVIE_KINGSMOURNE);
                 }
 
@@ -1827,7 +1829,7 @@ private:
         if (player->GetAreaId() == 13437) //Ve'nari's Refuge
             if (player->GetQuestStatus(QUEST_INTO_THE_MAW) == QUEST_STATUS_INCOMPLETE)
             {
-                player->ForceCompleteQuest(QUEST_INTO_THE_MAW);
+                player->CompleteQuest(QUEST_INTO_THE_MAW);
                 player->GetSceneMgr().PlaySceneByPackageId(SCENE_ORIBOS_TO_THE_MAW_SKYJUMP, SceneFlag::None);
             }
     }
@@ -1927,13 +1929,13 @@ public:
 
     void TethertoHomeFinish(Player* player)
     {
-        player->ForceCompleteQuest(QUEST_TETHER_TO_HOME);
+        player->CompleteQuest(QUEST_TETHER_TO_HOME);
         if (!player->GetPhaseShift().HasPhase(10063)) PhasingHandler::AddPhase(player, 10063, true);
     }
 
     void PathtoBastionFinish(Player* player)
     {
-        player->ForceCompleteQuest(QUEST_THE_PATH_TO_BASTION);
+        player->CompleteQuest(QUEST_THE_PATH_TO_BASTION);
         if (player->GetPhaseShift().HasPhase(10061)) PhasingHandler::RemovePhase(player, 10061, true);
         if (player->GetPhaseShift().HasPhase(10062)) PhasingHandler::RemovePhase(player, 10062, true);
         if (!player->GetPhaseShift().HasPhase(10063)) PhasingHandler::AddPhase(player, 10063, true);
