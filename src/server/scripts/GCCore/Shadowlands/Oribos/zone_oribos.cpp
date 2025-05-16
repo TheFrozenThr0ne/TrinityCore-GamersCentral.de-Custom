@@ -972,14 +972,17 @@ private:
                 Talk(3);
                 scheduler.Schedule(Milliseconds(10000), [this](TaskContext context)
                     {
+                        (void)context;
                         if (Creature* darion = me->FindNearestCreature(170640, 30.0f))
                             darion->AI()->Talk(0);
                     }).Schedule(Milliseconds(13000), [this](TaskContext context)
                         {
+                            (void)context;
                             if (Creature* thral = me->FindNearestCreature(171128, 30.0f))
                                 thral->AI()->Talk(0);
                         }).Schedule(Milliseconds(20000), [this](TaskContext context)
                             {
+                                (void)context;
                                 me->GetMotionMaster()->MovePath(16407901, false);
                                 if (Creature* jaina = me->FindNearestCreature(170153, 30.0f))
                                 {
@@ -989,6 +992,7 @@ private:
                                 }
                             }).Schedule(Milliseconds(28000), [this](TaskContext context)
                                 {
+                                    (void)context;
                                     Talk(4);
                                 });
                             break;
