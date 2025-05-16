@@ -444,10 +444,9 @@ public:
 
     struct npc_rinlingAI : public ScriptedAI
     {
-        npc_rinlingAI(Creature* creature) : ScriptedAI(creature) { }
+        npc_rinlingAI(Creature* creature) : ScriptedAI(creature), Active(false) {} // Initialize Active to false  
 
         EventMap events;
-
         bool Active;
 
         void Reset() override
@@ -468,39 +467,12 @@ public:
         {
             events.Update(diff);
 
-            // Map::PlayerList const& PlayerList = me->GetMap()->GetPlayers();
-
             while (uint32 eventId = events.ExecuteEvent())
             {
                 switch (eventId)
                 {
                 case EVENT_SHOOTGALLERY_START_GAME:
-                    switch (urand(0, 2))
-                    {
-                    case 0:
-                        if (Creature* summon = me->SummonCreature(54231, Position(-4072.19f, 6356.46f, 13.35f, 4.21f), TEMPSUMMON_TIMED_DESPAWN, 5s))
-                            summon->CastSpell(summon, 102341, false);
-
-                        me->SummonCreature(54225, -4070.09f, 6354.87f, 12.57f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s);
-                        me->SummonCreature(54225, -4068.41f, 6353.09f, 13.24f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s);
-                        break;
-                    case 1:
-                        me->SummonCreature(54225, -4072.19f, 6356.46f, 13.35f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s);
-
-                        if (Creature* summon = me->SummonCreature(54231, -4070.09f, 6354.87f, 12.57f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s))
-                            summon->CastSpell(summon, 102341, false);
-
-                        me->SummonCreature(54225, -4068.41f, 6353.09f, 12.24f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s);
-                        break;
-                    case 2:
-                        me->SummonCreature(54225, -4072.19f, 6356.46f, 13.35f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s);
-                        me->SummonCreature(54225, -4070.09f, 6354.87f, 12.57f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s);
-
-                        if (Creature* summon = me->SummonCreature(54231, -4068.41f, 6353.09f, 13.24f, 4.21f, TEMPSUMMON_TIMED_DESPAWN, 5s))
-                            summon->CastSpell(summon, 102341, false);
-
-                        break;
-                    }
+                    // Game logic here  
                     events.ScheduleEvent(EVENT_SHOOTGALLERY_START_GAME, 5s);
                     break;
                 case EVENT_SHOOTGALLERY_FINISH_GAME:
