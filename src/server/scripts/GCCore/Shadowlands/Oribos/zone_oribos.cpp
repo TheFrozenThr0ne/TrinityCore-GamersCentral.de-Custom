@@ -1066,6 +1066,7 @@ private:
             {
                 acolyte->GetMotionMaster()->MovePoint(0, -1832.54f, 1531.1f, 5274.21f, false, 4.44766f);
             }
+            break;
         case 11:
             if (Player* player = ObjectAccessor::GetPlayer(*me, m_playerGUID))
                 if (Creature* acolyte = ObjectAccessor::GetCreature(*me, acolyteGUID))
@@ -1075,7 +1076,6 @@ private:
                     me->DespawnOrUnsummon(1s, 30s);
                     acolyte->DespawnOrUnsummon(1s, 30s);
                 }
-            break;
         }
     }
 };
