@@ -426,16 +426,16 @@ private:
                                             sher->AI()->Talk(0);
                                     }).Schedule(Milliseconds(20000), [this, protector](TaskContext context)
                                         {
-                                            (void)context;
+                                            (void)this;
                                             protector->AI()->Talk(1);
                                         }).Schedule(Milliseconds(29000), [this](TaskContext context)
                                             {
-                                                (void)context;
+                                                (void)this;
                                                 if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     delen->AI()->Talk(1);
                                             }).Schedule(Milliseconds(40000), [this, protector](TaskContext context)
                                                 {
-                                                    (void)context;
+                                                    (void)this;
                                                     if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     {
                                                         delen->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
@@ -972,17 +972,17 @@ private:
                 Talk(3);
                 scheduler.Schedule(Milliseconds(10000), [this](TaskContext context)
                     {
-                        (void)context;
+                        (void)this;
                         if (Creature* darion = me->FindNearestCreature(170640, 30.0f))
                             darion->AI()->Talk(0);
                     }).Schedule(Milliseconds(13000), [this](TaskContext context)
                         {
-                            (void)context;
+                            (void)this;
                             if (Creature* thral = me->FindNearestCreature(171128, 30.0f))
                                 thral->AI()->Talk(0);
                         }).Schedule(Milliseconds(20000), [this](TaskContext context)
                             {
-                                (void)context;
+                                (void)this;
                                 me->GetMotionMaster()->MovePath(16407901, false);
                                 if (Creature* jaina = me->FindNearestCreature(170153, 30.0f))
                                 {
@@ -992,7 +992,7 @@ private:
                                 }
                             }).Schedule(Milliseconds(28000), [this](TaskContext context)
                                 {
-                                    (void)context;
+                                    (void)this;
                                     Talk(4);
                                 });
                             break;
