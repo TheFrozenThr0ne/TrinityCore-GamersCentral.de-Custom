@@ -421,6 +421,7 @@ private:
                                         delen->AI()->Talk(0);
                                 }).Schedule(Milliseconds(14000), [this](TaskContext context)
                                     {
+                                        (void)context;
                                         if (Creature* sher = GetClosestCreatureWithEntry(me, 167424, 20.0f))
                                             sher->AI()->Talk(0);
                                     }).Schedule(Milliseconds(20000), [this, protector](TaskContext context)
@@ -1678,8 +1679,6 @@ public:
 // 299119 Flight to Bastion
 struct spell_flight_to_bastion_299119 : public SpellScript
 {
-    PrepareSpellScript(spell_flight_to_bastion_299119);
-
     void HandleAfterCast()
     {
         if (!GetCaster())
