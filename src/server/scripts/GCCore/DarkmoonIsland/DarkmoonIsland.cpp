@@ -47,64 +47,52 @@ class playerscript_darkmoon_carousel : public PlayerScript
 // Whee! - 46668
 // Add the necessary definitions and fix the issues related to OnAuraUpdate and AuraUpdateFn.
 
-class spell_darkmoon_carousel_whee : public SpellScriptLoader
+class spell_darkmoon_carousel_whee_AuraScript : public AuraScript
 {
-public:
-    spell_darkmoon_carousel_whee() : SpellScriptLoader("spell_darkmoon_carousel_whee") {}
+    uint32 update = 0; // Initialisierung der Variable
 
-    class spell_darkmoon_carousel_whee_AuraScript : public AuraScript
+    bool Validate(SpellInfo const* /*spell*/) override
     {
-        uint32 update;
+        update = 0; // Sicherstellen, dass die Variable auch hier initialisiert wird
+        return true;
+    }
 
-        bool Validate(SpellInfo const* /*spell*/) override
+    void OnUpdate(uint32 diff)
+    {
+        update += diff;
+
+        if (update >= 5000)
         {
-            update = 0;
-            return true;
-        }
-
-        void OnUpdate(uint32 diff)
-        {
-            update += diff;
-
-            if (update >= 5000)
+            if (Player* _player = GetCaster()->ToPlayer())
             {
-                if (Player* _player = GetCaster()->ToPlayer())
+                if (Transport* transport = dynamic_cast<Transport*>(_player->GetTransport()))
                 {
-                    if (Transport* transport = dynamic_cast<Transport*>(_player->GetTransport()))
+                    if (transport->GetEntry() == GOB_DARKMOON_CAROUSEL)
                     {
-                        if (transport->GetEntry() == GOB_DARKMOON_CAROUSEL)
+                        if (Aura* aura = GetAura())
                         {
-                            if (Aura* aura = GetAura())
-                            {
-                                uint32 currentMaxDuration = aura->GetMaxDuration();
-                                uint32 newMaxDuration = currentMaxDuration + (5 * MINUTE * IN_MILLISECONDS);
-                                newMaxDuration = newMaxDuration <= (60 * MINUTE * IN_MILLISECONDS) ? newMaxDuration : (60 * MINUTE * IN_MILLISECONDS);
+                            uint32 currentMaxDuration = aura->GetMaxDuration();
+                            uint32 newMaxDuration = currentMaxDuration + (5 * MINUTE * IN_MILLISECONDS);
+                            newMaxDuration = newMaxDuration <= (60 * MINUTE * IN_MILLISECONDS) ? newMaxDuration : (60 * MINUTE * IN_MILLISECONDS);
 
-                                aura->SetMaxDuration(newMaxDuration);
-                                aura->SetDuration(newMaxDuration);
-                            }
+                            aura->SetMaxDuration(newMaxDuration);
+                            aura->SetDuration(newMaxDuration);
                         }
                     }
                 }
-
-                update = 0;
             }
+
+            update = 0;
         }
-
-        void Register() override
-        {
-            // Define OnAuraUpdate and AuraUpdateFn properly
-            OnAuraUpdate = [this](uint32 diff) { OnUpdate(diff); };
-        }
-
-    private:
-        std::function<void(uint32)> OnAuraUpdate;
-    };
-
-    AuraScript* GetAuraScript() const override
-    {
-        return new spell_darkmoon_carousel_whee_AuraScript();
     }
+
+    void Register() override
+    {
+        OnAuraUpdate = [this](uint32 diff) { OnUpdate(diff); };
+    }
+
+private:
+    std::function<void(uint32)> OnAuraUpdate;
 };
 
 // To the Staging Area! - 101260
@@ -638,8 +626,6 @@ public:
 
     class spell_gen_shoe_baby_SpellScript : public SpellScript
     {
-        PrepareSpellScript(spell_gen_shoe_baby_SpellScript);
-
         SpellCastResult CheckRequirement()
         {
             if (GetCaster()->GetTypeId() != TYPEID_PLAYER)
@@ -717,8 +703,6 @@ public:
 
     class spell_heal_injuried_carnie_SpellScript : public SpellScript
     {
-        PrepareSpellScript(spell_heal_injuried_carnie_SpellScript);
-
         SpellCastResult CheckRequirement()
         {
             if (GetCaster()->GetTypeId() != TYPEID_PLAYER)
@@ -870,8 +854,6 @@ public:
 
     class spell_shoot_gallery_shoot_SpellScript : public SpellScript
     {
-        PrepareSpellScript(spell_shoot_gallery_shoot_SpellScript);
-
         SpellCastResult CheckRequirement()
         {
             if (GetCaster()->GetTypeId() != TYPEID_PLAYER)
@@ -916,7 +898,7 @@ void AddSC_darkmoon_island()
     new npc_rinling();
     new spell_ring_toss();
     new item_darkmoon_faire_fireworks();
-    new spell_darkmoon_carousel_whee();
+    new spell_darkmoon_carousel_whee_AuraScript();
     new spell_darkmoon_staging_area_teleport();
     new spell_gen_repair_damaged_tonk();
     new spell_gen_shoe_baby();
