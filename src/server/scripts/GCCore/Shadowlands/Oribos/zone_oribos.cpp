@@ -415,7 +415,7 @@ private:
                         {
                             player->GetScheduler().Schedule(Milliseconds(5000), [this, player](TaskContext context)
                                 {
-                                    (void)this;
+                                    (void)context;
                                     player->KilledMonsterCredit(164579);
                                     if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                         delen->AI()->Talk(0);
