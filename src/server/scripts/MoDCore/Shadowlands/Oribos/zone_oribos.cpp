@@ -1735,7 +1735,7 @@ private:
 
     void OnUpdate(Player* player, uint32 /*p_time*/) override
     {
-        if (player->GetQuestStatus(QUEST_INTO_THE_MAW) != QUEST_STATUS_NONE || player->GetLevel() != 60)
+        if (player->GetQuestStatus(QUEST_INTO_THE_MAW) == QUEST_STATUS_NONE || player->GetLevel() != 60)
             return;
 
         IntoMaw = false;
