@@ -373,8 +373,6 @@ public:
 
     class spell_whack_gnoll_override_action_AuraScript : public AuraScript
     {
-        PrepareAuraScript(spell_whack_gnoll_override_action_AuraScript);
-
         bool Validate(SpellInfo const* /*entry*/) override
         {
             return true;
