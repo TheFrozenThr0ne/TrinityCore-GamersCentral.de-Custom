@@ -1183,9 +1183,9 @@ private:
             m_playerGUID = player->GetGUID();
             me->AI()->Talk(0);
         }
-        player->GetScheduler().Schedule(Milliseconds(10000), [this, player](TaskContext /*context*/)
+        player->GetScheduler().Schedule(Milliseconds(10000), [this, player](TaskContext context)
             {
-                (void)this;
+                (void)context;
                 LoadPath(me->GetEntry());
                 Start(true);
             });
