@@ -10,10 +10,10 @@
 // #################################################### //
 
 /* ######### Continents ######## > */
-void Add_GCCore_ShadowlandsScripts();
+void Add_MoDCore_ShadowlandsScripts();
 
-void AddGCCoreScripts()
+void AddMoDCoreScripts()
 {
-	Add_GCCore_ShadowlandsScripts();
+	Add_MoDCore_ShadowlandsScripts();
 }
 

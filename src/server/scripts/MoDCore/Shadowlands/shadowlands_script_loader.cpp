@@ -18,7 +18,7 @@
 //Zones
 void AddSC_zone_oribos();
 
-void Add_GCCore_ShadowlandsScripts()
+void Add_MoDCore_ShadowlandsScripts()
 {
 	//Zones
 	AddSC_zone_oribos();
