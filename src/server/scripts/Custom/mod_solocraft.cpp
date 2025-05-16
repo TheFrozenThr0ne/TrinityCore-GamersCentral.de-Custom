@@ -77,6 +77,7 @@ to make up the non-deal party makeup.
 #include "InstanceScript.h"
 #include "Chat.h"
 #include "Log.h"
+#include <sstream>
 
 /*
  * TODO:
