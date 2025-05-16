@@ -382,7 +382,7 @@ private:
             m_playerGUID = player->GetGUID();
             if (Creature* protector = GetClosestCreatureWithEntry(me, 172532, 20.0f))
                 protectorGUID = protector->GetGUID();
-            player->GetScheduler().Schedule(Milliseconds(3000), [this, player](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(3000), [this, player]()
                 {
                     me->AI()->Talk(1);
                     Start(true, player->GetGUID());
