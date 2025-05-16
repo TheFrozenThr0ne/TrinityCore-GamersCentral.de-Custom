@@ -1522,6 +1522,7 @@ public:
                     player->CastSpell(player, 328941, false);
                     player->GetScheduler().Schedule(Milliseconds(2000), [player](TaskContext context)
                         {
+                            (void)context;
                             player->TeleportTo(2222, 4602.91f, 6802.31f, 4882.83f, 4.30136f);
                         });
                 }
