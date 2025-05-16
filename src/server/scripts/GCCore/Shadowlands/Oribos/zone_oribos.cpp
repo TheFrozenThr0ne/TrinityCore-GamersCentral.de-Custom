@@ -984,19 +984,19 @@ private:
             case EVENT_BATTLE_OF_ARDENWEALD_TALK_START:
             {
                 Talk(3);
-                scheduler.Schedule(Milliseconds(10000), [this](TaskContext /*context*/)
+                scheduler.Schedule(Milliseconds(10000), [this](TaskContext context)
                     {
-                        (void)this;
+                        (void)context;
                         if (Creature* darion = me->FindNearestCreature(170640, 30.0f))
                             darion->AI()->Talk(0);
-                    }).Schedule(Milliseconds(13000), [this](TaskContext /*context*/)
+                    }).Schedule(Milliseconds(13000), [this](TaskContext context)
                         {
-                            (void)this;
+                            (void)context;
                             if (Creature* thral = me->FindNearestCreature(171128, 30.0f))
                                 thral->AI()->Talk(0);
-                        }).Schedule(Milliseconds(20000), [this](TaskContext /*context*/)
+                        }).Schedule(Milliseconds(20000), [this](TaskContext context)
                             {
-                                (void)this;
+                                (void)context;
                                 me->GetMotionMaster()->MovePath(16407901, false);
                                 if (Creature* jaina = me->FindNearestCreature(170153, 30.0f))
                                 {
@@ -1004,9 +1004,9 @@ private:
                                     jaina->GetMotionMaster()->MovePath(16407901, false);
                                     jaina->DespawnOrUnsummon(30s, 60s);
                                 }
-                            }).Schedule(Milliseconds(28000), [this](TaskContext /*context*/)
+                            }).Schedule(Milliseconds(28000), [this](TaskContext context)
                                 {
-                                    (void)this;
+                                    (void)context;
                                     Talk(4);
                                 });
                             break;
