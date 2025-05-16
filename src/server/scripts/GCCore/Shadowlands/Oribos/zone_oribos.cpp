@@ -426,13 +426,16 @@ private:
                                             sher->AI()->Talk(0);
                                     }).Schedule(Milliseconds(20000), [this, protector](TaskContext context)
                                         {
+                                            (void)context;
                                             protector->AI()->Talk(1);
                                         }).Schedule(Milliseconds(29000), [this](TaskContext context)
                                             {
+                                                (void)context;
                                                 if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     delen->AI()->Talk(1);
                                             }).Schedule(Milliseconds(40000), [this, protector](TaskContext context)
                                                 {
+                                                    (void)context;
                                                     if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     {
                                                         delen->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
