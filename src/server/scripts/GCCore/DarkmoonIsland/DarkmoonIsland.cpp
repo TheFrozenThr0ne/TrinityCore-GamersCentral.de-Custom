@@ -62,7 +62,7 @@ public:
             return true;
         }
 
-        void OnUpdate(uint32 diff) override
+        void OnUpdate(uint32 diff)
         {
             update += diff;
 
