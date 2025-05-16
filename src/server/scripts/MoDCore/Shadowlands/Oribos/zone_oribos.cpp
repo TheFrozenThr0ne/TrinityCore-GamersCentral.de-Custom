@@ -627,7 +627,7 @@ private:
     {
         if (me->IsQuestGiver())
             player->PrepareQuestMenu(me->GetGUID());
-        if (player->hasQuest(QUEST_AUDIENCE_WITH_THE_ARBITER))
+        if (player->GetQuestStatus(QUEST_AUDIENCE_WITH_THE_ARBITER) != QUEST_STATUS_NONE)
         {
             if (!player->GetQuestObjectiveData(QUEST_AUDIENCE_WITH_THE_ARBITER, 1))
                 AddGossipItemFor(player, GossipOptionNpc::None, "What is this place?", 26362, GOSSIP_ACTION_INFO_DEF + 1);
@@ -635,7 +635,7 @@ private:
             if (player->GetQuestObjectiveData(QUEST_AUDIENCE_WITH_THE_ARBITER, 1) && !player->GetQuestObjectiveData(QUEST_AUDIENCE_WITH_THE_ARBITER, 2))
                 AddGossipItemFor(player, GossipOptionNpc::None, "I am ready to return.", 26362, GOSSIP_ACTION_INFO_DEF + 2);
         }
-        if (player->hasQuest(QUEST_VOICES_OF_THE_ETERNAL))
+        if (player->GetQuestStatus(QUEST_VOICES_OF_THE_ETERNAL) != QUEST_STATUS_NONE)
         {
             if (!player->GetQuestObjectiveData(QUEST_VOICES_OF_THE_ETERNAL, 0))
             {
@@ -1274,7 +1274,7 @@ public:
         {
             if (me->IsQuestGiver())
                 player->PrepareQuestMenu(me->GetGUID());
-            if (player->hasQuest(QUEST_IF_U_WANT_PEACE))
+            if (player->GetQuestStatus(QUEST_IF_U_WANT_PEACE) != QUEST_STATUS_NONE)
             {
                 AddGossipItemFor(player, GossipOptionNpc::None, "Im ready to go to Maldraxxus.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 0);
             }
@@ -1317,7 +1317,7 @@ public:
         {
             if (me->IsQuestGiver())
                 player->PrepareQuestMenu(me->GetGUID());
-            if (player->hasQuest(QUEST_SEEK_THE_ASCENDED))
+            if (player->GetQuestStatus(QUEST_SEEK_THE_ASCENDED) != QUEST_STATUS_NONE)
             {
                 AddGossipItemFor(player, GossipOptionNpc::None, "Im ready to go to Bastion.", 26679, GOSSIP_ACTION_INFO_DEF + 0);
             }
@@ -1364,7 +1364,7 @@ public:
         {
             if (me->IsQuestGiver())
                 player->PrepareQuestMenu(me->GetGUID());
-            if (player->hasQuest(QUEST_THE_FIRST_MOVE))
+            if (player->GetQuestStatus(QUEST_THE_FIRST_MOVE) != QUEST_STATUS_NONE)
             {
                 AddGossipItemFor(player, GossipOptionNpc::None, "<Ask Adrestes what happened in Elysian Hold.>", 26131, GOSSIP_ACTION_INFO_DEF + 0);
             }
@@ -1380,7 +1380,7 @@ public:
             if (action == GOSSIP_ACTION_INFO_DEF + 0)//Maldraxxus
             {
 
-                if (player->hasQuest(QUEST_THE_FIRST_MOVE))
+                if (player->GetQuestStatus(QUEST_THE_FIRST_MOVE) != QUEST_STATUS_NONE)
                 {
                     player->CompleteQuest(QUEST_THE_FIRST_MOVE);
                     player->CastSpell(player, MOVIE_KINGSMOURNE);
@@ -1491,7 +1491,7 @@ public:
     {
         if (Player* player = clicker->ToPlayer())
         {
-            if (player->hasQuest(QUEST_THE_BATTLE_OF_ARDENWEALD))
+            if (player->GetQuestStatus(QUEST_THE_BATTLE_OF_ARDENWEALD) != QUEST_STATUS_NONE)
             {
                 player->KilledMonsterCredit(178291);
                 player->SummonCreature(178291, player->GetPosition(), TEMPSUMMON_MANUAL_DESPAWN);
@@ -1735,7 +1735,7 @@ private:
 
     void OnUpdate(Player* player, uint32 /*p_time*/) override
     {
-        if (!player->hasQuest(QUEST_INTO_THE_MAW) || player->GetLevel() != 60)
+        if (!player->GetQuestStatus(QUEST_INTO_THE_MAW) != QUEST_STATUS_NONE || player->GetLevel() != 60)
             return;
 
         IntoMaw = false;
@@ -1773,7 +1773,7 @@ private:
 
         if (player->GetAreaId() == 10565) //Oribos
         {
-            if (!player->hasQuest(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND))
+            if (!player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) != QUEST_STATUS_NONE)
             {
                 if (const Quest* quest = sObjectMgr->GetQuestTemplate(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND))
                     if (player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_NONE)
@@ -1813,7 +1813,7 @@ private:
 
         if (player->GetAreaId() == 13498) //Ring of Transference
         {
-            if (player->hasQuest(QUEST_UNDERSTANDING_THE_SHADOWLANDS)
+            if (player->GetQuestStatus(QUEST_UNDERSTANDING_THE_SHADOWLANDS) != QUEST_STATUS_NONE
                 || player->GetQuestStatus(QUEST_UNDERSTANDING_THE_SHADOWLANDS) == QUEST_STATUS_REWARDED)
             {
                 player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext /*context*/)
@@ -1829,7 +1829,7 @@ private:
                 if (player->GetPhaseShift().HasPhase(10062)) PhasingHandler::RemovePhase(player, 10062, true);
                 if (!player->GetPhaseShift().HasPhase(10063)) PhasingHandler::AddPhase(player, 10063, true);
             }
-            if (player->hasQuest(QUEST_REPORT_TO_ORIBOS) || player->GetQuestStatus(QUEST_REPORT_TO_ORIBOS) == QUEST_STATUS_REWARDED)
+            if (player->GetQuestStatus(QUEST_REPORT_TO_ORIBOS) != QUEST_STATUS_NONE || player->GetQuestStatus(QUEST_REPORT_TO_ORIBOS) == QUEST_STATUS_REWARDED)
             {
                 player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext /*context*/)
                     {
@@ -1860,7 +1860,7 @@ private:
     {
         if (player->GetAreaId() == 13499) //Ring of Fates
         {
-            if (player->hasQuest(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) || player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_REWARDED
+            if (player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) != QUEST_STATUS_NONE || player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_REWARDED
                 || player->GetQuestStatus(QUEST_NO_PLACE_FOR_THE_LIVING) == QUEST_STATUS_INCOMPLETE)
             {
                 if (!player->GetPhaseShift().HasPhase(10061)) PhasingHandler::AddPhase(player, 10061, true);
