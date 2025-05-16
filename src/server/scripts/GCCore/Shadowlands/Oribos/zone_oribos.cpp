@@ -538,7 +538,10 @@ private:
 
         if (Player* player = target->ToPlayer())
             if (target->GetDistance2d(me) <= 10.0f)
-                if (player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_REWARDED && player->GetQuestStatus(QUEST_NO_PLACE_FOR_THE_LIVING) == QUEST_STATUS_NONE || player->GetQuestStatus(QUEST_AUDIENCE_WITH_THE_ARBITER) == QUEST_STATUS_COMPLETE || player->GetQuestStatus(QUEST_AUDIENCE_WITH_THE_ARBITER) == QUEST_STATUS_REWARDED)
+                if ((player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_REWARDED &&
+                    player->GetQuestStatus(QUEST_NO_PLACE_FOR_THE_LIVING) == QUEST_STATUS_NONE) ||
+                    player->GetQuestStatus(QUEST_AUDIENCE_WITH_THE_ARBITER) == QUEST_STATUS_COMPLETE ||
+                    player->GetQuestStatus(QUEST_AUDIENCE_WITH_THE_ARBITER) == QUEST_STATUS_REWARDED)
                 {
                     me->SetNpcFlag(UNIT_NPC_FLAG_QUESTGIVER);
                 }
