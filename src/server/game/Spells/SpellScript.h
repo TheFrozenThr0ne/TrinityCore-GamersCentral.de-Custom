@@ -1129,10 +1129,6 @@ class TC_GAME_API AuraScript : public SpellScriptBase
     // internal use classes & functions
     // DO NOT OVERRIDE THESE IN SCRIPTS
 public:
-#define AURASCRIPT_FUNCTION_TYPE_DEFINES(CLASSNAME) \
-        typedef void(CLASSNAME::*AuraUpdateFnType)(uint32);
-
-    AURASCRIPT_FUNCTION_TYPE_DEFINES(AuraScript)
     class CheckAreaTargetHandler final
     {
     public:
@@ -2083,7 +2079,7 @@ public:
     };
 
      // left for custom compatibility only, DO NOT USE
-#define PrepareAuraScript(CLASSNAME)
+    #define PrepareAuraScript(CLASSNAME)
 
 public:
     AuraScript();
