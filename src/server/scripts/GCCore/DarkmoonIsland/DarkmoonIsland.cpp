@@ -528,23 +528,10 @@ public:
             if (me->IsQuestGiver())
                 player->PrepareQuestMenu(me->GetGUID());
 
-            char const* GOSSIP_BUTTON_1;
-            char const* GOSSIP_BUTTON_2;
-
-            switch (LocaleConstant currentlocale = player->GetSession()->GetSessionDbcLocale())
-            {
-            case 20:    // locales end on 11, case 20 is impossible case, this is just to fix compile warnings.
-                break;
-            default:
-                GOSSIP_BUTTON_1 = "How does the shooting gallery work? ";
-                GOSSIP_BUTTON_2 = "I'm ready to shoot! |cFF0000FF(Darkmoon Game Token)|r";
-                break;
-            };
-
-            AddGossipItemFor(player, GossipOptionNpc::None, GOSSIP_BUTTON_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+            AddGossipItemFor(player, GossipOptionNpc::None, "How does the shooting gallery work? ", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
             if (!player->HasAura(101612) && !player->HasAura(110230) && !player->HasAura(102121) && !player->HasAura(102178) && !player->HasAura(102058) && !player->HasAura(101871))
-                AddGossipItemFor(player, GossipOptionNpc::None, GOSSIP_BUTTON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                AddGossipItemFor(player, GossipOptionNpc::None, "I'm ready to shoot! |cFF0000FF(Darkmoon Game Token)|r", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
 
             SendGossipMenuFor(player, 23002, me->GetGUID());
             return true;
@@ -554,26 +541,11 @@ public:
         {
             uint32 const action = player->PlayerTalkClass->GetGossipOptionAction(gossipListId);
 
-            char const* GOSSIP_BUTTON_1;
-            char const* GOSSIP_BUTTON_2;
-            char const* GOSSIP_BUTTON_3;
-
-            switch (LocaleConstant currentlocale = player->GetSession()->GetSessionDbcLocale())
-            {
-            case 20:    // locales end on 11, case 20 is impossible case, this is just to fix compile warnings.
-                break;
-            default:
-                GOSSIP_BUTTON_1 = "How does the shooting gallery work? ";
-                GOSSIP_BUTTON_2 = "I'm ready to shoot! |cFF0000FF(Darkmoon Game Token)|r";
-                GOSSIP_BUTTON_3 = "Alright.";
-                break;
-            };
-
             player->PlayerTalkClass->ClearMenus();
 
             if (action == GOSSIP_ACTION_INFO_DEF + 1)
             {
-                AddGossipItemFor(player, GossipOptionNpc::None, GOSSIP_BUTTON_3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+                AddGossipItemFor(player, GossipOptionNpc::None, "Alright.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
                 SendGossipMenuFor(player, 23003, me->GetGUID());
             }
 
@@ -602,10 +574,10 @@ public:
                 if (me->IsQuestGiver())
                     player->PrepareQuestMenu(me->GetGUID());
 
-                AddGossipItemFor(player, GossipOptionNpc::None, GOSSIP_BUTTON_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+                AddGossipItemFor(player, GossipOptionNpc::None, "How does the shooting gallery work? ", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
                 if (!player->HasAura(101612) && !player->HasAura(110230) && !player->HasAura(102121) && !player->HasAura(102178) && !player->HasAura(102058) && !player->HasAura(101871))
-                    AddGossipItemFor(player, GossipOptionNpc::None, GOSSIP_BUTTON_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+                    AddGossipItemFor(player, GossipOptionNpc::None, "I'm ready to shoot! |cFF0000FF(Darkmoon Game Token)|r", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
 
                 SendGossipMenuFor(player, 23002, me->GetGUID());
             }
