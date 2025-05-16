@@ -118,6 +118,12 @@ void EventProcessor::AddEvent(BasicEvent* event, Milliseconds e_time, bool set_a
     m_events.insert(std::pair<uint64, BasicEvent*>(e_time.count(), event));
 }
 
+void EventProcessor::AddDelayedEvent(BasicEvent* event, Milliseconds offset)
+{
+    Milliseconds execTime = CalculateTime(offset);
+    AddEvent(event, execTime);
+}
+
 void EventProcessor::ModifyEventTime(BasicEvent* event, Milliseconds newTime)
 {
     for (auto itr = m_events.begin(); itr != m_events.end(); ++itr)
@@ -130,24 +136,4 @@ void EventProcessor::ModifyEventTime(BasicEvent* event, Milliseconds newTime)
         m_events.insert(std::pair<uint64, BasicEvent*>(newTime.count(), event));
         break;
     }
-}
-
-void EventProcessor::AddDelayedEvent(uint64 t_offset, std::function<void()>&& function)
-{
-    class LambdaEvent : public BasicEvent
-    {
-    public:
-        explicit LambdaEvent(std::function<void()>&& f) : _function(std::move(f)) {}
-
-        bool Execute(uint64 /*time*/, uint32 /*diff*/) override
-        {
-            _function();
-            return true; // einmalige Ausf?hrung
-        }
-
-    private:
-        std::function<void()> _function;
-    };
-
-    AddEvent(new LambdaEvent(std::move(function)), Milliseconds(m_time + t_offset), true);
 }
