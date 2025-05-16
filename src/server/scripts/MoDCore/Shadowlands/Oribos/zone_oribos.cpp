@@ -1567,7 +1567,7 @@ private:
             if (Creature* talinara = me->SummonCreature(NPC_TAL_INARA, -1769.19f, 1344.77f, 5450.93f, 0.862366f, TEMPSUMMON_MANUAL_DESPAWN))
             {
                 tal_inaraGUID = talinara->GetGUID();
-                me->AddDelayedEvent(4000, [this, talinara]()
+                me->AddDelayedEvent(4000, [talinara]()
                     {
                         talinara->AI()->Talk(0);
                     });
