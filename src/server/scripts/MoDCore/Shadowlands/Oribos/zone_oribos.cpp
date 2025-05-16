@@ -1773,7 +1773,7 @@ private:
 
         if (player->GetAreaId() == 10565) //Oribos
         {
-            if (!player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) != QUEST_STATUS_NONE)
+            if (player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_NONE)
             {
                 if (const Quest* quest = sObjectMgr->GetQuestTemplate(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND))
                     if (player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_NONE)
