@@ -64,7 +64,7 @@ public:
 
     struct npc_finlay_coolshotAI : public ScriptedAI
     {
-        npc_finlay_coolshotAI(Creature* creature) : ScriptedAI(creature) { }
+        npc_finlay_coolshotAI(Creature* creature) : ScriptedAI(creature), Active(false) {}
 
         EventMap events;
 
@@ -86,7 +86,7 @@ public:
             }
         }
 
-        void UpdateAI(uint32 diff)
+        void UpdateAI(uint32 diff) override
         {
             events.Update(diff);
 
