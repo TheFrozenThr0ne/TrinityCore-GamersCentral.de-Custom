@@ -728,8 +728,9 @@ public:
         if (quest->GetQuestId() == QUEST_LINK_TO_THE_MAW)
         {
             Talk(6);
-            player->GetScheduler().Schedule(Milliseconds(9000), [this, player](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(9000), [this, player](TaskContext /*context*/)
                 {
+                    (void)this;
                     if (Creature* bolvar = GetClosestCreatureWithEntry(player, 164079, 20.0f))
                         bolvar->AI()->Talk(6);
                 });
@@ -774,21 +775,25 @@ public:
             me->CastSpell(me, SPELL_CHAINELING, false);
             player->AddAura(SPELL_ANIMA_EXTRAPOLATION, player);
             Talk(2);
-            player->GetScheduler().Schedule(Milliseconds(12000), [this](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(12000), [this](TaskContext /*context*/ )
                 {
+                    (void)this;
                     Talk(3);
                 });
-            player->GetScheduler().Schedule(Milliseconds(21000), [this](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(21000), [this](TaskContext /*context*/)
                 {
+                    (void)this;
                     Talk(4);
                 });
-            player->GetScheduler().Schedule(Milliseconds(33000), [this, player](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(33000), [this, player](TaskContext /*context*/)
                 {
+                    (void)this;
                     Talk(5);
                     player->KilledMonsterCredit(179107);
                 });
-            player->GetScheduler().Schedule(Milliseconds(40000), [this](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(40000), [this](TaskContext /*context*/)
                 {
+                    (void)this;
                     me->RemoveAura(SPELL_CHAINELING);
                 });
             break;
@@ -884,12 +889,14 @@ private:
         {
             if (Creature* sher = GetClosestCreatureWithEntry(player, 167424, 20.0f))
                 sher->AI()->Talk(3);
-            player->GetScheduler().Schedule(Milliseconds(13000), [this, player](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(13000), [this, player](TaskContext /*context*/)
                 {
+                    (void)this;
                     if (Creature* delen = GetClosestCreatureWithEntry(player, 167425, 20.0f))
                         delen->AI()->Talk(5);
-                }).Schedule(Milliseconds(25000), [this, player](TaskContext context)
+                }).Schedule(Milliseconds(25000), [this, player](TaskContext /*context*/)
                     {
+                        (void)this;
                         me->AI()->Talk(0, player);
                     });
         }
@@ -926,8 +933,9 @@ private:
                     if (!say60152)
                     {
                         me->AI()->Talk(1);
-                        player->GetScheduler().Schedule(Milliseconds(13000), [this, player](TaskContext context)
+                        player->GetScheduler().Schedule(Milliseconds(13000), [this, player](TaskContext /*context*/)
                             {
+                                (void)this;
                                 player->KilledMonsterCredit(167424);
                                 if (Creature* inara = GetClosestCreatureWithEntry(player, 167486, 20.0f))
                                     inara->AI()->Talk(3);
@@ -940,8 +948,9 @@ private:
                     if (!say63639)
                     {
                         me->AI()->Talk(5);
-                        player->GetScheduler().Schedule(Milliseconds(8000), [this, player](TaskContext context)
+                        player->GetScheduler().Schedule(Milliseconds(8000), [this, player](TaskContext /*context*/)
                             {
+                                (void)this;
                                 player->KilledMonsterCredit(167424);
                                 if (Creature* inara = GetClosestCreatureWithEntry(player, 159478, 20.0f))
                                     inara->AI()->Talk(1);
@@ -1766,15 +1775,17 @@ private:
                     {
                         player->AddQuest(quest, nullptr);
                     }
-                player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext context)
+                player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext /*context*/)
                     {
+                        (void)this;
                         if (!player->GetPhaseShift().HasPhase(10060)) PhasingHandler::AddPhase(player, 10060, true);
                     });
             }
             if (player->GetQuestStatus(QUEST_STRANGER_IN_AN_EVEN_STRANGERLAND) == QUEST_STATUS_INCOMPLETE)
             {
-                player->GetScheduler().Schedule(Milliseconds(3000), [this, player](TaskContext context)
+                player->GetScheduler().Schedule(Milliseconds(3000), [this, player](TaskContext /*context*/)
                     {
+                        (void)this;
                         if (!player->GetPhaseShift().HasPhase(10061)) PhasingHandler::AddPhase(player, 10061, true);
                     });
             }
@@ -1800,8 +1811,9 @@ private:
             if (player->hasQuest(QUEST_UNDERSTANDING_THE_SHADOWLANDS)
                 || player->GetQuestStatus(QUEST_UNDERSTANDING_THE_SHADOWLANDS) == QUEST_STATUS_REWARDED)
             {
-                player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext context)
+                player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext /*context*/)
                     {
+                        (void)this;
                         if (!player->GetPhaseShift().HasPhase(10060)) PhasingHandler::AddPhase(player, 10060, true);
                         if (!player->GetPhaseShift().HasPhase(10061)) PhasingHandler::AddPhase(player, 10061, true);
                     });
@@ -1814,8 +1826,9 @@ private:
             }
             if (player->hasQuest(QUEST_REPORT_TO_ORIBOS) || player->GetQuestStatus(QUEST_REPORT_TO_ORIBOS) == QUEST_STATUS_REWARDED)
             {
-                player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext context)
+                player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext /*context*/)
                     {
+                        (void)this;
                         if (!player->GetPhaseShift().HasPhase(10060)) PhasingHandler::AddPhase(player, 10060, true);
                         if (!player->GetPhaseShift().HasPhase(10069)) PhasingHandler::AddPhase(player, 10069, true);
                     });
@@ -1884,8 +1897,9 @@ private:
                 if (!player->GetPhaseShift().HasPhase(10076)) PhasingHandler::AddPhase(player, 10076, true);
             }
 
-            player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext context)
+            player->GetScheduler().Schedule(Milliseconds(2000), [this, player](TaskContext /*context*/)
                 {
+                    (void)this;
                     if (!player->GetPhaseShift().HasPhase(10060)) PhasingHandler::AddPhase(player, 10060, true);
                 });
         }
