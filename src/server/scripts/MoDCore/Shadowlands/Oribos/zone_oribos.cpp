@@ -1733,7 +1733,7 @@ public:
 private:
     bool IntoMaw;
 
-    void OnUpdate(Player* player, uint32 /*p_time*/)
+    void OnUpdate(Player* player, uint32 /*p_time*/) override
     {
         if (!player->hasQuest(QUEST_INTO_THE_MAW) || player->GetLevel() != 60)
             return;
