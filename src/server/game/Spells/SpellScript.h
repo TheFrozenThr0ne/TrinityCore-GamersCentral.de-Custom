@@ -2082,22 +2082,8 @@ public:
         SafeWrapperType _safeWrapper;
     };
 
-    // GCCore >
-    class TC_GAME_API AuraUpdateHandler
-    {
-    public:
-        AuraUpdateHandler(AuraUpdateFnType _pEffectHandlerScript);
-        void Call(AuraScript* auraScript, uint32 diff);
-    private:
-        AuraUpdateFnType pEffectHandlerScript;
-    };
-    // < GCCore
-
      // left for custom compatibility only, DO NOT USE
-#define AURASCRIPT_FUNCTION_CAST_DEFINES(CLASSNAME) \
-        class AuraUpdateHandlerFunction : public AuraScript::AuraUpdateHandler { public: AuraUpdateHandlerFunction(AuraUpdateFnType _pEffectHandlerScript) : AuraScript::AuraUpdateHandler((AuraScript::AuraUpdateFnType)_pEffectHandlerScript) {} };
-       
-#define PrepareAuraScript(CLASSNAME) AURASCRIPT_FUNCTION_TYPE_DEFINES(CLASSNAME) AURASCRIPT_FUNCTION_CAST_DEFINES(CLASSNAME)
+#define PrepareAuraScript(CLASSNAME)
 
 public:
     AuraScript();
@@ -2386,21 +2372,6 @@ public:
 
     // returns desired cast difficulty for triggered spells
     Difficulty GetCastDifficulty() const;
-
-    // DekkCore >
-
-        public:
-            // executed when absorb aura effect is going to reduce damage using both effect index and effect name
-            // example: OnEffectNameAbsorb += AuraEffectNameAbsorbFn(class::function, EffectIndexSpecifier);
-            // where function is: void function (AuraEffect* aurEff, DamageInfo& dmgInfo, uint32& absorbAmount);
-
-            // executed when aura is updated
-            // example: OnAuraUpdate += AuraUpdateFn(class::function);
-            // where function is: void function (const uint32 diff);
-            HookList<AuraUpdateHandler> OnAuraUpdate;
-#define AuraUpdateFn(F) AuraUpdateHandlerFunction(&F)
-            // < DekkCore
-
 };
 
 //

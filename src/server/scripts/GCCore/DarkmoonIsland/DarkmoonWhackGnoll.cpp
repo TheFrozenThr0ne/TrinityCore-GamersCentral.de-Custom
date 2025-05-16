@@ -307,8 +307,6 @@ class spell_whack_gnoll_whack : public SpellScriptLoader
 
         class spell_whack_gnoll_whack_SpellScript : public SpellScript
         {
-            PrepareSpellScript(spell_whack_gnoll_whack_SpellScript);
-
             SpellCastResult CheckCast()
             {
                 Unit* caster = GetCaster();

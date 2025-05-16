@@ -1205,8 +1205,6 @@ public:
 
     class spell_open_gate_bastion_SpellScript : public SpellScript
     {
-        PrepareSpellScript(spell_open_gate_bastion);
-
         void HandleAfterCast()
         {
             if (Player* player = GetCaster()->ToPlayer())
@@ -1635,8 +1633,6 @@ private:
 // 353260 Ralling the Troops
 struct spell_Ralling_the_Troops : public SpellScript
 {
-    PrepareSpellScript(spell_Ralling_the_Troops);
-
     void HandleAfterCast()
     {
         if (!GetCaster())

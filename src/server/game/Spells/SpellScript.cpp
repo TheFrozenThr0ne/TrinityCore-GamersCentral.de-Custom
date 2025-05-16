@@ -1198,8 +1198,3 @@ Difficulty AuraScript::GetCastDifficulty() const
 {
     return GetAura()->GetCastDifficulty();
 }
-
-AuraScript::AuraUpdateHandler::AuraUpdateHandler(AuraUpdateFnType _pEffectHandlerScript)
-{
-    pEffectHandlerScript = _pEffectHandlerScript;
-}
