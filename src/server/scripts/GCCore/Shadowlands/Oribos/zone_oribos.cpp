@@ -912,6 +912,7 @@ private:
                 {
                     player->GetScheduler().Schedule(Milliseconds(3000), [tal](TaskContext context)
                         {
+                            (void)context;
                             tal->AI()->Talk(0);
                         });
                 }
