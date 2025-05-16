@@ -102,7 +102,6 @@ class TC_COMMON_API EventProcessor
         void KillAllEvents(bool force);
 
         void AddDelayedEvent(uint64 t_offset, std::function<void()>&& function);
-
         void AddEvent(BasicEvent* event, Milliseconds e_time, bool set_addtime = true);
         template<std::invocable<> T>
         void AddEvent(T&& event, Milliseconds e_time, bool set_addtime = true) { AddEvent(new LambdaBasicEvent<T>(std::forward<T>(event)), e_time, set_addtime); }

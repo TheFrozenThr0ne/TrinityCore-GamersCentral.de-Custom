@@ -142,7 +142,7 @@ void EventProcessor::AddDelayedEvent(uint64 t_offset, std::function<void()>&& fu
         bool Execute(uint64 /*time*/, uint32 /*diff*/) override
         {
             _function();
-            return true; // einmalige Ausführung
+            return true; // einmalige Ausf?hrung
         }
 
     private:
