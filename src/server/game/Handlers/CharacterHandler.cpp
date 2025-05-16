@@ -463,10 +463,10 @@ void WorldSession::HandleCharEnum(CharacterDatabaseQueryHolder const& holder)
     {
         WorldPackets::Character::EnumCharactersResult::RaceUnlock raceUnlock;
         raceUnlock.RaceID = requirement.first;
-        raceUnlock.HasUnlockedLicense = GetAccountExpansion() >= requirement.second.Expansion;
-        raceUnlock.HasUnlockedAchievement = requirement.second.AchievementId != 0
-            && (sWorld->getBoolConfig(CONFIG_CHARACTER_CREATING_DISABLE_ALLIED_RACE_ACHIEVEMENT_REQUIREMENT)
-                /* || HasAccountAchievement(requirement.second.AchievementId)*/);
+        raceUnlock.HasUnlockedLicense = true;//GetAccountExpansion() >= requirement.second.Expansion;
+        raceUnlock.HasUnlockedAchievement = true;// requirement.second.AchievementId != 0
+        //&& (sWorld->getBoolConfig(CONFIG_CHARACTER_CREATING_DISABLE_ALLIED_RACE_ACHIEVEMENT_REQUIREMENT)
+            // || HasAccountAchievement(requirement.second.AchievementId));
         charEnum.RaceUnlockData.push_back(raceUnlock);
     }
 

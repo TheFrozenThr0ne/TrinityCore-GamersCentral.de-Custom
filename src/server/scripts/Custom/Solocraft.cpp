@@ -12,6 +12,7 @@
 #include <math.h>
 #include <unordered_map>
 #include "ObjectGuid.h"
+#include <sstream>
 
 bool SoloCraftEnable = 1;
 bool SoloCraftAnnounceModule = 1;

@@ -56,6 +56,7 @@ or logoff the server.
 #include "Config.h"
 #include "Chat.h"
 #include "World.h"
+#include <sstream>
 
 class CustomLogin : public PlayerScript
 {

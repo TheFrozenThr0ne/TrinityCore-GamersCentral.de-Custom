@@ -24,8 +24,8 @@ uint32 Max_roll;
 class reward_system : public PlayerScript
 {
 public:
-    reward_system() : PlayerScript("reward_system") { }
-    
+    reward_system() : PlayerScript("reward_system"), roll(0) {} // Initialize roll to 0  
+
     uint32 initialTimer = (sConfigMgr->GetIntDefault("RewardTime", 1) * HOUR * IN_MILLISECONDS);
     uint32 RewardTimer = initialTimer;
     int32 roll;
@@ -49,36 +49,28 @@ public:
                 if (RewardTimer <= p_time)
                 {
                     roll = urand(1, Max_roll);
-                    // TODO: this should use a asynchronous query with a callback instead of a synchronous, blocking query
                     QueryResult result = CharacterDatabase.PQuery("SELECT item, quantity FROM reward_system WHERE roll = '{}'", roll);
 
                     if (!result)
                     {
-                        
-                        // Inform the player about the lose
                         ChatHandler(player->GetSession()).PSendSysMessage("[Lucky Number] Better luck next time! Your roll was %u.", roll);
                         RewardTimer = initialTimer;
                         return;
                     }
 
-                    //Lets now get the item
                     do
                     {
                         Field* fields = result->Fetch();
                         uint32 pItem = fields[0].GetInt32();
                         uint32 quantity = fields[1].GetInt32();
-
-                        // now lets add the item
-                        //player->AddItem(pItem, quantity);
                         SendRewardToPlayer(player, pItem, quantity);
                     } while (result->NextRow());
 
-                    // Inform the player about the win
                     ChatHandler(player->GetSession()).PSendSysMessage("[Lucky Number] Congratulations you have won with a roll of %u.", roll);
-
                     RewardTimer = initialTimer;
                 }
-                else  RewardTimer -= p_time;
+                else
+                    RewardTimer -= p_time;
             }
         }
     }
@@ -89,7 +81,6 @@ public:
             return;
 
         ChatHandler(receiver->GetSession()).PSendSysMessage("You will receive your item in your mailbox");
-        // format: name "subject text" "mail text" item1[:count1] item2[:count2] ... item12[:count12]
         uint64 receiverGuid = receiver->GetGUID().GetCounter();
         std::string receiverName;
 
@@ -128,10 +119,7 @@ public:
             return;
         }
 
-        // from console show not existed sender
         MailSender sender(MAIL_NORMAL, receiver->GetSession() ? receiver->GetGUID().GetCounter() : 0, MAIL_STATIONERY_TEST);
-
-        // fill mail
         MailDraft draft(subject, text);
 
         CharacterDatabaseTransaction trans = CharacterDatabase.BeginTransaction();
@@ -140,7 +128,7 @@ public:
         {
             if (Item* item = Item::CreateItem(itr->first, itr->second, ItemContext::NONE, receiver->GetSession() ? receiver : 0))
             {
-                item->SaveToDB(trans);                               // save for prevent lost at next mail load, if send fail then item will deleted
+                item->SaveToDB(trans);
                 draft.AddItem(item);
             }
         }
@@ -150,8 +138,8 @@ public:
 
         return;
     }
-
 };
+
 
 class reward_system_conf : public WorldScript
 {

@@ -24,6 +24,7 @@ Gambler.Jackpot = 50
 #include "WorldSession.h"
 #include "Chat.h"
 #include "Config.h"
+#include <sstream>
 
 class GamblerAnnounce : public PlayerScript
 {

@@ -8,6 +8,7 @@
 #include "ScriptedCreature.h"
 #include "ScriptedGossip.h"
 #include "Chat.h"
+#include <sstream>
 
 bool rewardShopAnnounceModule;
 
