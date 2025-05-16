@@ -413,29 +413,25 @@ private:
                     if (Player* player = ObjectAccessor::GetPlayer(*me, m_playerGUID))
                         if (Creature* protector = ObjectAccessor::GetCreature(*me, protectorGUID))
                         {
-                            player->GetScheduler().Schedule(Milliseconds(5000), [this, player](TaskContext context)
+                            player->GetScheduler().Schedule(Milliseconds(5000), [this, player](TaskContext /*context*/)
                                 {
-                                    (void)context;
+
                                     player->KilledMonsterCredit(164579);
                                     if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                         delen->AI()->Talk(0);
-                                }).Schedule(Milliseconds(14000), [this](TaskContext context)
+                                }).Schedule(Milliseconds(14000), [this](TaskContext /*context*/)
                                     {
-                                        (void)context;
                                         if (Creature* sher = GetClosestCreatureWithEntry(me, 167424, 20.0f))
                                             sher->AI()->Talk(0);
-                                    }).Schedule(Milliseconds(20000), [this, protector](TaskContext context)
+                                    }).Schedule(Milliseconds(20000), [this, protector](TaskContext /*context*/)
                                         {
-                                            (void)this;
                                             protector->AI()->Talk(1);
-                                        }).Schedule(Milliseconds(29000), [this](TaskContext context)
+                                        }).Schedule(Milliseconds(29000), [this](TaskContext /*context*/)
                                             {
-                                                (void)this;
                                                 if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     delen->AI()->Talk(1);
-                                            }).Schedule(Milliseconds(40000), [this, protector](TaskContext context)
+                                            }).Schedule(Milliseconds(40000), [this, protector](TaskContext /*context*/)
                                                 {
-                                                    (void)this;
                                                     if (Creature* delen = GetClosestCreatureWithEntry(me, 167425, 20.0f))
                                                     {
                                                         delen->SetNpcFlag(UNIT_NPC_FLAG_GOSSIP);
@@ -970,19 +966,17 @@ private:
             case EVENT_BATTLE_OF_ARDENWEALD_TALK_START:
             {
                 Talk(3);
-                scheduler.Schedule(Milliseconds(10000), [this](TaskContext context)
+                scheduler.Schedule(Milliseconds(10000), [this](TaskContext /*context*/)
                     {
                         (void)this;
                         if (Creature* darion = me->FindNearestCreature(170640, 30.0f))
                             darion->AI()->Talk(0);
-                    }).Schedule(Milliseconds(13000), [this](TaskContext context)
+                    }).Schedule(Milliseconds(13000), [this](TaskContext /*context*/)
                         {
-                            (void)this;
                             if (Creature* thral = me->FindNearestCreature(171128, 30.0f))
                                 thral->AI()->Talk(0);
-                        }).Schedule(Milliseconds(20000), [this](TaskContext context)
+                        }).Schedule(Milliseconds(20000), [this](TaskContext /*context*/)
                             {
-                                (void)this;
                                 me->GetMotionMaster()->MovePath(16407901, false);
                                 if (Creature* jaina = me->FindNearestCreature(170153, 30.0f))
                                 {
@@ -990,9 +984,8 @@ private:
                                     jaina->GetMotionMaster()->MovePath(16407901, false);
                                     jaina->DespawnOrUnsummon(30s, 60s);
                                 }
-                            }).Schedule(Milliseconds(28000), [this](TaskContext context)
+                            }).Schedule(Milliseconds(28000), [this](TaskContext /*context*/)
                                 {
-                                    (void)this;
                                     Talk(4);
                                 });
                             break;
