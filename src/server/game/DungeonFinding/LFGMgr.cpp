@@ -468,7 +468,7 @@ void LFGMgr::JoinLfg(Player* player, uint8 roles, LfgDungeonSet& dungeons)
                     else if (plrg->HasAura(9454)) // check Freeze debuff
                     {
                         joinData.result = LFG_JOIN_NO_SLOTS;
-                        joinData.playersMissingRequirement.push_back(&plrg->GetName());
+                        joinData.playersMissingRequirement.push_back(plrg->GetName());
                     }
                     ++memberCount;
                     players.insert(plrg->GetGUID());
@@ -818,7 +818,7 @@ void LFGMgr::UpdateRoleCheck(ObjectGuid gguid, ObjectGuid guid /* = ObjectGuid::
    @param[in]     players Set of players to check their dungeon restrictions
    @param[out]    lockMap Map of players Lock status info of given dungeons (Empty if dungeons is not empty)
 */
-void LFGMgr::GetCompatibleDungeons(LfgDungeonSet* dungeons, GuidSet const& players, LfgLockPartyMap* lockMap, std::vector<std::string const*>* playersMissingRequirement, bool isContinue)
+void LFGMgr::GetCompatibleDungeons(LfgDungeonSet* dungeons, GuidSet const& players, LfgLockPartyMap* lockMap, std::vector<std::string_view>* playersMissingRequirement, bool isContinue)
 {
     lockMap->clear();
 
@@ -860,7 +860,7 @@ void LFGMgr::GetCompatibleDungeons(LfgDungeonSet* dungeons, GuidSet const& playe
                     dungeonsToRemove.insert(dungeonId);
 
                 (*lockMap)[guid][dungeonId] = it2->second;
-                playersMissingRequirement->push_back(&player->GetName());
+                playersMissingRequirement->push_back(player->GetName());
             }
         }
     }
