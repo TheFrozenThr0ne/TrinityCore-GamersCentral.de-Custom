@@ -19,21 +19,9 @@
 
 // The name of this function should match:
 // void Add${NameOfDirectory}Scripts()
-void AddRewardShopScripts();
-void AddSC_AllMountsNPCScripts();
-void AddSC_skip_StarterArea();
-void AddSC_SkipStartingNPCScripts();
-void AddLfgSoloScripts();
 void AddSC_FallEvent();
-void AddSC_PlayerlocalflagScripts();
 
 void AddCustomScripts()
 {
-    AddRewardShopScripts();
-    AddSC_AllMountsNPCScripts();
-	AddSC_skip_StarterArea();
-    AddSC_SkipStartingNPCScripts();
-    AddLfgSoloScripts();
     AddSC_FallEvent();
-    AddSC_PlayerlocalflagScripts();
 }
