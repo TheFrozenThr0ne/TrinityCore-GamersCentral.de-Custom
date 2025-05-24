@@ -20,8 +20,10 @@
 // The name of this function should match:
 // void Add${NameOfDirectory}Scripts()
 void AddSC_FallEvent();
+void AddLfgSoloScripts();
 
 void AddCustomScripts()
 {
     AddSC_FallEvent();
+	AddLfgSoloScripts();
 }
