@@ -817,6 +817,15 @@ WorldPacket const* DisplayToast::Write()
     return &_worldPacket;
 }
 
+// MoDCore >
+WorldPacket const* WorldPackets::Misc::CovenantPreviewOpenNpc::Write()
+{
+    _worldPacket << ObjGUID;
+    _worldPacket << CovenantId;
+
+    return &_worldPacket;
+}
+
 WorldPacket const* AccountWarbandSceneUpdate::Write()
 {
     _worldPacket << Bits<1>(IsFullUpdate);

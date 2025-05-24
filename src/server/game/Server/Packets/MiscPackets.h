@@ -1017,7 +1017,7 @@ namespace WorldPackets
             uint32 CurrencyID = 0;
         };
 
-        // GCCore >
+        // MoDCore >
         class CovenantPreviewOpenNpc  final : public ServerPacket
         {
         public:
